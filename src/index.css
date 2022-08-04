@@ -1,0 +1,69 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+        'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+main {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+#CaseInboxMFE-container .caseInbox-MuiDrawer-paper {
+    /* top : 60px; */
+    position: absolute;
+    height: auto;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* .custom-scrollbar .MuiPaper-root::-webkit-scrollbar {
+    width: 6px;
+    display: block;
+}
+.custom-scrollbar .MuiPaper-root::-webkit-scrollbar-thumb {
+    background-color: #36b2e9;
+} */
+
+/* .sxp_js_chat_chat {
+    height: 350px;
+}
+
+.sxp_js_chat_chatHeadaer {
+    background-color: #201e45;
+}
+
+.sxp_js_chat_chatIcon {
+    background-color: #201e45;
+}
+
+.journeyTray .trayBtn {
+    background-color: #201e45;
+}
+
+.sxp_js_chat_closeIcon {
+    background-color: #201e45;
+} */
+
+.sxp_js_chat_chat {
+    height: 350px;
+}
+
+.sxp_js_chat_chatHeadaer {
+    background-color: #f17b7b;
+}
+
+.sxp_js_chat_chatIcon {
+    background-color: #f17b7b;
+}
+
+.journeyTray .trayBtn {
+    background-color: #f17b7b;
+}
+
+.sxp_js_chat_closeIcon {
+    background-color: #f17b7b;
+}
