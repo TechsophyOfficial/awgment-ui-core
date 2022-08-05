@@ -1,5 +1,4 @@
 #!/bin/sh
-set -xe
 # WEB_ROOT=/usr/share/nginx/html
 
 mkdir $WEB_ROOT/model || true

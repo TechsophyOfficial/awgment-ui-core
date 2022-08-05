@@ -10,7 +10,7 @@ The following are the features of Core Module.
 ## Docker build and run
 docker build . -t awgment-ui-core
 
-docker run -p 8181:80 --env-file docker.env awgment-ui-core:latest
+docker run -it -p 8181:80 --env-file docker.env awgment-ui-core:latest
 
 curl localhost:8181/model/config.json
 
