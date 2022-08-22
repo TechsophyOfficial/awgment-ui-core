@@ -3,10 +3,6 @@ import {
     deleteTemplateApi,
     downloadTemplateApi,
     getAllTemplatesApi,
-    GET_ALL_TEMPLATES_ENDPOINT,
-    TEMPLATE_DELETE_ENDPOINNT,
-    TEMPLATE_DOWNLOAD_ENDPOINNT,
-    TEMPLATE_UPLOAD_ENDPOINT,
     uploadTemplateApi,
 } from '../TemplateService';
 
@@ -32,24 +28,30 @@ const errorResponse = () => {
     };
 };
 
+const GET_ALL_TEMPLATES_ENDPOINT ='',
+TEMPLATE_DELETE_ENDPOINNT='',
+TEMPLATE_DOWNLOAD_ENDPOINNT='',
+TEMPLATE_UPLOAD_ENDPOINT='';
+
 describe('getAllTemplatesApi', () => {
     afterEach(jest.clearAllMocks);
+    const URL= '';
     const data = [];
     test('fetches successfully data from an API', async () => {
         mockedRequest.get.mockResolvedValue(successResponse(data));
-        const result = await getAllTemplatesApi();
+        const result = await getAllTemplatesApi(URL);
         expect(mockedRequest.get).toHaveBeenCalledTimes(1);
         expect(result).toEqual(successResponse(data));
     });
 
     test('getAllTemplatesApi() should call wilth proper Request URL', async () => {
-        await getAllTemplatesApi();
+        await getAllTemplatesApi(URL);
         expect(mockedRequest.get).toHaveBeenCalledWith(`${GET_ALL_TEMPLATES_ENDPOINT}`);
     });
 
     test('fetches erroneously data from an API', async () => {
         mockedRequest.get.mockResolvedValue(errorResponse());
-        const result = await getAllTemplatesApi();
+        const result = await getAllTemplatesApi(URL);
         expect(result.message).toEqual('Unable to fetch templates');
     });
 });
@@ -59,13 +61,14 @@ describe('uploadTemplateApi', () => {
     const data = {
         templateName: 'fileName.ftl',
     };
+    const URL = '';
     const params = {
         TemplateName: 'fileName',
         file: new File([new Blob()], 'filename.ftl'),
     };
     test('fetches successfully data from an API', async () => {
         mockedRequest.postForm.mockResolvedValue(successResponse(data));
-        const result = await uploadTemplateApi('fileName', '');
+        const result = await uploadTemplateApi('fileName', '',URL);
         expect(mockedRequest.postForm).toHaveBeenCalledTimes(1);
         expect(mockedRequest.postForm).toHaveBeenCalledWith(`${TEMPLATE_UPLOAD_ENDPOINT}`, params);
         expect(result.success).toEqual(true);
@@ -73,7 +76,7 @@ describe('uploadTemplateApi', () => {
 
     test('fetches erroneously data from an API', async () => {
         mockedRequest.postForm.mockResolvedValue(errorResponse());
-        const result = await uploadTemplateApi('123', '');
+        const result = await uploadTemplateApi('123', '',URL);
         expect(result.success).toEqual(false);
     });
 });
@@ -82,10 +85,10 @@ describe('downloadTemplateApi testing', () => {
     afterEach(jest.clearAllMocks);
 
     const data = '<HTML></HTML>';
-
+    const URL = '';
     test('fetches successfully data from an API', async () => {
         mockedRequest.getBlob.mockResolvedValue(successResponse(data));
-        const result = await downloadTemplateApi('123');
+        const result = await downloadTemplateApi('123',URL);
         expect(mockedRequest.getBlob).toHaveBeenCalledTimes(1);
         expect(mockedRequest.getBlob).toHaveBeenCalledWith(TEMPLATE_DOWNLOAD_ENDPOINNT + '/123');
         expect(result.success).toEqual(true);
@@ -93,7 +96,7 @@ describe('downloadTemplateApi testing', () => {
 
     test('fetches erroneously data from an API', async () => {
         mockedRequest.getBlob.mockResolvedValue(errorResponse());
-        const result = await downloadTemplateApi('123');
+        const result = await downloadTemplateApi('123',URL);
         expect(mockedRequest.getBlob).toHaveBeenCalledTimes(1);
         expect(result.success).toEqual(false);
     });
@@ -101,10 +104,10 @@ describe('downloadTemplateApi testing', () => {
 
 describe('Delete Template testing', () => {
     afterEach(jest.clearAllMocks);
-
+    const URL = '';
     test('fetches successfully data from an API', async () => {
         mockedRequest.delete.mockResolvedValue(successResponse({}));
-        const result = await deleteTemplateApi('123');
+        const result = await deleteTemplateApi('123',URL);
         expect(mockedRequest.delete).toHaveBeenCalledTimes(1);
         expect(mockedRequest.delete).toHaveBeenCalledWith(TEMPLATE_DELETE_ENDPOINNT + '123');
         expect(result).toEqual(successResponse({}));
@@ -112,7 +115,7 @@ describe('Delete Template testing', () => {
 
     test('fetches erroneously data from an API', async () => {
         mockedRequest.delete.mockResolvedValue(errorResponse());
-        const result = await deleteTemplateApi('123');
+        const result = await deleteTemplateApi('123',URL);
         expect(mockedRequest.delete).toHaveBeenCalledTimes(1);
         expect(result.success).toEqual(false);
     });

@@ -4,6 +4,7 @@ import { INITIAL_THEME } from 'constants/common';
 import React, { useEffect } from 'react';
 import { getAllThemes, getUserTheme, ThemeInstance } from '../services/ThemeService';
 import defaultTheme from './defaultTheme.json';
+import AppConfig from '../appConfig';
 
 interface userPreferences {
     id: string;
@@ -25,6 +26,9 @@ interface State {
 
 export const ThemeContext = React.createContext({} as State);
 export const ThemeContextProvider = ({ children }) => {
+    const appData: any = React.useContext(AppConfig);
+    const GATEWAY_URL = appData.apiGatewayUrl;
+
     const [theme, setTheme] = React.useState<unknown>(defaultTheme);
     const [themes, setThemes] = React.useState<ThemeInstance[]>([]);
     const [userInfo, setUserInfo] = React.useState<userPreferences>({} as userPreferences);
@@ -46,7 +50,7 @@ export const ThemeContextProvider = ({ children }) => {
     };
 
     const getSelecterUserTheme = async (allThemes): Promise<void> => {
-        const { success, data } = await getUserTheme();
+        const { success, data } = await getUserTheme(GATEWAY_URL);
         if (success && data) {
             let selectedTheme = null;
             allThemes.map((theme) => {

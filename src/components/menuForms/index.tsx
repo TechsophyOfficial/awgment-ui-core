@@ -7,6 +7,7 @@ import { closeSpinner, showFlashMessage, showSpinner } from '../../actions/commo
 import { getFormById } from 'services/MenuService';
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import AppConfig from '../../appConfig';
 
 interface ParamTypes {
     formId: string;
@@ -17,20 +18,26 @@ interface ParamTypes {
 const MenuForm = () => {
     const dispatch = useDispatch();
     const history = useHistory();
+    const appData: any = React.useContext(AppConfig);
     const { formId, label } = useParams<ParamTypes>();
 
     const [menuForm, setMenutForm] = useState<any>(null);
 
-    const fetchAddForm = useCallback(async () => {
-        dispatch(showSpinner());
-        const form = await getFormById(formId);
-        setMenutForm(form.data);
-        dispatch(closeSpinner());
-    }, [dispatch, formId]);
+    const fetchAddForm = useCallback(
+        async (url) => {
+            dispatch(showSpinner());
+            const form = await getFormById(formId, url);
+            setMenutForm(form.data);
+            dispatch(closeSpinner());
+        },
+        [dispatch, formId],
+    );
 
     useEffect(() => {
-        fetchAddForm();
-    }, [fetchAddForm]);
+        if (appData) {
+            fetchAddForm(appData.apiGatewayUrl);
+        }
+    }, [fetchAddForm, appData]);
 
     const handleEvent = ({ success, message }) => {
         if (success) {

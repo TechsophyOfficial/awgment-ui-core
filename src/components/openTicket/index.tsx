@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import TsfFormioForm from 'tsf_component_formio/dist/components/tsfFormioForm';
 import { closeSpinner, showFlashMessage, showSpinner } from '../../actions/common';
+import AppConfig from '../../appConfig';
 
 import {
     getTicketForm,
@@ -15,6 +16,9 @@ import {
 import { useKeycloak } from '@react-keycloak/web';
 
 const OpenTicket = () => {
+    const appData: any = React.useContext(AppConfig);
+    const GATEWAY_URL = appData.apiGatewayUrl;
+
     const dispatch = useDispatch();
     const history = useHistory();
     const { keycloak } = useKeycloak();
@@ -26,7 +30,7 @@ const OpenTicket = () => {
     useEffect(() => {
         const fetchAddForm = async () => {
             dispatch(showSpinner());
-            const form = await getTicketForm();
+            const form = await getTicketForm(GATEWAY_URL);
             setTicketForm(form);
             dispatch(closeSpinner());
         };
@@ -45,7 +49,7 @@ const OpenTicket = () => {
     //         ...others,
     //     };
     //     dispatch(showSpinner());
-    //     const { success, message = '' } = await createTicket(submissionData);
+    //     const { success, message = '' } = await createTicket(submissionData, GATEWAY_URL);
     //     dispatch(closeSpinner());
     //     if (success) {
     //         dispatch(showFlashMessage({ successMessage: message }));

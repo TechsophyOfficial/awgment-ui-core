@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 
 interface Props {
-    children: React.ReactElement;
+    children: any;
     extensions: string[];
     onChange: (form) => void;
     onError: (message) => void;

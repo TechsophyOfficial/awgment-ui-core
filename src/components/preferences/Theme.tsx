@@ -7,8 +7,11 @@ import { CustomFormattedMessage } from '../common/CustomFormattedMessage';
 import { saveUserTheme } from '../../services/ThemeService';
 import { useDispatch } from 'react-redux';
 import { closeSpinner, showFlashMessage, showSpinner } from '../../actions/common';
+import AppConfig from '../../appConfig';
 
 const Theme = () => {
+    const appData: any = React.useContext(AppConfig);
+    const GATEWAY_URL = appData.apiGatewayUrl;
     const [themes, setThemes] = useState<any[]>([]);
     const { onChangeTheme } = useContext(ThemeContext);
     const { appTheme, appThemes } = useContext<any>(ThemeContext);
@@ -35,7 +38,7 @@ const Theme = () => {
 
     const onSaveTheme = async (): Promise<void> => {
         dispatch(showSpinner());
-        const { success, message } = await saveUserTheme(selectedTheme ? selectedTheme.id : '');
+        const { success, message } = await saveUserTheme(selectedTheme ? selectedTheme.id : '', GATEWAY_URL);
         if (success) {
             dispatch(closeSpinner());
             dispatch(showFlashMessage({ successMessage: message }));

@@ -5,23 +5,28 @@ import TsfFormioForm from 'tsf_component_formio/dist/components/tsfFormioForm';
 import { useDispatch } from 'react-redux';
 import { closeSpinner, showFlashMessage, showSpinner } from '../../actions/common';
 import { getViewDoctorConsultanciesForm } from 'services/SaveSubmitService';
+import AppConfig from '../../appConfig';
 
 // import { useHistory } from 'react-router-dom';
 
 const ViewDoctorConsultanciesForm = () => {
     const dispatch = useDispatch();
-
+    const appData: any = React.useContext(AppConfig);
+    const GATEWAY_URL = appData.apiGatewayUrl;
     const [viewDoctorConsultanciesForm, setViewDoctorConsultanciesForm] = useState<any>(null);
 
-    const fetchAddForm = useCallback(async () => {
-        dispatch(showSpinner());
-        const form = await getViewDoctorConsultanciesForm();
-        setViewDoctorConsultanciesForm(form);
-        dispatch(closeSpinner());
-    }, [dispatch]);
+    const fetchAddForm = useCallback(
+        async (url: string) => {
+            dispatch(showSpinner());
+            const form = await getViewDoctorConsultanciesForm(url);
+            setViewDoctorConsultanciesForm(form);
+            dispatch(closeSpinner());
+        },
+        [dispatch],
+    );
 
     useEffect(() => {
-        fetchAddForm();
+        if (GATEWAY_URL) fetchAddForm(GATEWAY_URL);
     }, [fetchAddForm]);
 
     const handleEvent = ({ success, message }) => {

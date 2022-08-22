@@ -32,12 +32,15 @@ export interface FormioSubmissionData extends UserData {
     submit: boolean;
 }
 
-export const GET_ALL_TEMPLATES_ENDPOINT = `${process.env.REACT_APP_API_GATEWAY_URL}${ALL_TEMPLATES}`;
-export const TEMPLATE_UPLOAD_ENDPOINT = `${process.env.REACT_APP_API_GATEWAY_URL}${TEMPLATE_UPLOAD}`;
-export const TEMPLATE_DOWNLOAD_ENDPOINNT = `${process.env.REACT_APP_API_GATEWAY_URL}${TEMPLATE_DOWNLOAD}`;
-export const TEMPLATE_DELETE_ENDPOINNT = `${process.env.REACT_APP_API_GATEWAY_URL}${TEMPLATES_DELETE}`;
+//export const GET_ALL_TEMPLATES_ENDPOINT = `${process.env.REACT_APP_API_GATEWAY_URL}${ALL_TEMPLATES}`;
+//export const TEMPLATE_UPLOAD_ENDPOINT = `${process.env.REACT_APP_API_GATEWAY_URL}${TEMPLATE_UPLOAD}`;
+//export const TEMPLATE_DOWNLOAD_ENDPOINNT = `${process.env.REACT_APP_API_GATEWAY_URL}${TEMPLATE_DOWNLOAD}`;
+//export const TEMPLATE_DELETE_ENDPOINNT = `${process.env.REACT_APP_API_GATEWAY_URL}${TEMPLATES_DELETE}`;
 
-export const getAllTemplatesApi = async (): Promise<{ success: boolean; message?: string; data?: any }> => {
+export const getAllTemplatesApi = async (
+    gatewayUrl: string,
+): Promise<{ success: boolean; message?: string; data?: any }> => {
+    const GET_ALL_TEMPLATES_ENDPOINT = `${gatewayUrl}${ALL_TEMPLATES}`;
     const r: ResponseProps = (await request.get(`${GET_ALL_TEMPLATES_ENDPOINT}`)) as ResponseProps;
     if (r.success) {
         const data: any = r.data as any;
@@ -46,7 +49,12 @@ export const getAllTemplatesApi = async (): Promise<{ success: boolean; message?
     return { success: false, message: 'Unable to fetch templates' };
 };
 
-export const uploadTemplateApi = async (fileName: string, file: string): Promise<{ success: boolean }> => {
+export const uploadTemplateApi = async (
+    fileName: string,
+    file: string,
+    gatewayUrl: string,
+): Promise<{ success: boolean }> => {
+    const TEMPLATE_UPLOAD_ENDPOINT = `${gatewayUrl}${TEMPLATE_UPLOAD}`;
     const blob = new Blob([file]);
     const fileOfBlob = new File([blob], `${fileName}.ftl`);
     const params = {
@@ -61,7 +69,11 @@ export const uploadTemplateApi = async (fileName: string, file: string): Promise
     return { success: false };
 };
 
-export const downloadTemplateApi = async (id: string): Promise<{ success: boolean; message?: string; data?: any }> => {
+export const downloadTemplateApi = async (
+    id: string,
+    gatewayUrl: string,
+): Promise<{ success: boolean; message?: string; data?: any }> => {
+    const TEMPLATE_DOWNLOAD_ENDPOINNT = `${gatewayUrl}${TEMPLATE_DOWNLOAD}`;
     const response = (await request.getBlob(`${TEMPLATE_DOWNLOAD_ENDPOINNT}/${id}`)) as ResponseProps;
     if (response && response.success) {
         return { success: true, data: response };
@@ -81,7 +93,11 @@ export const downloadTemplateApi = async (id: string): Promise<{ success: boolea
     //                 return {success : false}
 };
 
-export const deleteTemplateApi = async (id: string): Promise<{ success: boolean; message?: string; data?: any }> => {
+export const deleteTemplateApi = async (
+    id: string,
+    gatewayUrl: string,
+): Promise<{ success: boolean; message?: string; data?: any }> => {
+    const TEMPLATE_DELETE_ENDPOINNT = `${gatewayUrl}${TEMPLATES_DELETE}`;
     const r: ResponseProps = (await request.delete(`${TEMPLATE_DELETE_ENDPOINNT + id}`)) as ResponseProps;
     if (r.success) {
         const data: any = r.data as any;

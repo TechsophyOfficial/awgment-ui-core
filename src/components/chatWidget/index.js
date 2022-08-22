@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
+import AppConfig from '../../appConfig';
 const token = sessionStorage.getItem('react-token');
-const projId = process.env.REACT_APP_SXP_PROJECT_ID;
+
+//const projId = process.env.REACT_APP_SXP_PROJECT_ID;
 const versionId = 'WORKING';
 class LoadSxpChat extends Component {
+    static contextType = AppConfig;
     constructor(props) {
         super(props);
         this.state = {
             userToken: '',
         };
     }
+
     componentDidMount = () => {
         this.getUserToken();
     };
@@ -17,12 +21,12 @@ class LoadSxpChat extends Component {
     };
     loadIt = () => {
         let mainObj = {
-            socketUrl: process.env.REACT_APP_SOCKET_URL, //sxp URL
-            socketPath: process.env.REACT_APP_SOCKET_PATH,
+            socketUrl: this.context.socketUrl, //process.env.REACT_APP_SOCKET_URL, //sxp URL
+            socketPath: this.context.socketPath, //process.env.REACT_APP_SOCKET_PATH,
             SSL: true, //secure connection, true for https, false for http
             accessToken: `Bearer ${this.state.userToken}`,
-            currentProject: projId, // name of the project / client you are working on / for
-            fileServerUrl: process.env.REACT_APP_CHAT_FILE_SERVER_URL,
+            currentProject: this.context.sxpProjectId, // name of the project / client you are working on / for
+            fileServerUrl: this.context.chatFileServerUrl, //process.env.REACT_APP_CHAT_FILE_SERVER_URL,
             mainTitle: 'AWGMENT',
             // call : '+919876543210',
             // titleLogo:'https://sxp.v1.techsophy.com/static/media/logo.7ad470b4.png',
