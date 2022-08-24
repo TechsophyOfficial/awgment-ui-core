@@ -1,7 +1,7 @@
 echo "{"
 IFS='='
 count=0
-env  | grep REACT_APP | while  read -r name value ; 
+env  | while  read -r name value ; 
 do 
   if [ $count -gt 0 ]; 
     then  echo ","   
