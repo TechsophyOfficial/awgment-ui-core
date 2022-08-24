@@ -5,7 +5,7 @@ RUN mkdir -p /usr/share/nginx/html/model
 COPY build/. /usr/share/nginx/html/model
 RUN chown -R nginx:nginx /usr/share/nginx/html
 COPY env2Json.sh .
-COPY dockerEntrypoint.sh .
+COPY run.sh .
 
 EXPOSE 80 443
-CMD ["./dockerEntrypoint.sh"]
+CMD ["./run.sh"]
