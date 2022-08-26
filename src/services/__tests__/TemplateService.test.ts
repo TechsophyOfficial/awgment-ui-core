@@ -5,6 +5,7 @@ import {
     getAllTemplatesApi,
     uploadTemplateApi,
 } from '../TemplateService';
+import { TEMPLATE_UPLOAD, TEMPLATE_DOWNLOAD, ALL_TEMPLATES, TEMPLATES_DELETE } from '../../constants/endpoints';
 
 jest.mock('../../request');
 
@@ -46,7 +47,7 @@ describe('getAllTemplatesApi', () => {
 
     test('getAllTemplatesApi() should call wilth proper Request URL', async () => {
         await getAllTemplatesApi(URL);
-        expect(mockedRequest.get).toHaveBeenCalledWith(`${GET_ALL_TEMPLATES_ENDPOINT}`);
+        expect(mockedRequest.get).toHaveBeenCalledWith(`${ALL_TEMPLATES}`);
     });
 
     test('fetches erroneously data from an API', async () => {
@@ -70,7 +71,7 @@ describe('uploadTemplateApi', () => {
         mockedRequest.postForm.mockResolvedValue(successResponse(data));
         const result = await uploadTemplateApi('fileName', '',URL);
         expect(mockedRequest.postForm).toHaveBeenCalledTimes(1);
-        expect(mockedRequest.postForm).toHaveBeenCalledWith(`${TEMPLATE_UPLOAD_ENDPOINT}`, params);
+        expect(mockedRequest.postForm).toHaveBeenCalledWith(`${TEMPLATE_UPLOAD}`, params);
         expect(result.success).toEqual(true);
     });
 
@@ -90,7 +91,7 @@ describe('downloadTemplateApi testing', () => {
         mockedRequest.getBlob.mockResolvedValue(successResponse(data));
         const result = await downloadTemplateApi('123',URL);
         expect(mockedRequest.getBlob).toHaveBeenCalledTimes(1);
-        expect(mockedRequest.getBlob).toHaveBeenCalledWith(TEMPLATE_DOWNLOAD_ENDPOINNT + '/123');
+        expect(mockedRequest.getBlob).toHaveBeenCalledWith(TEMPLATE_DOWNLOAD + '/123');
         expect(result.success).toEqual(true);
     });
 
@@ -109,7 +110,7 @@ describe('Delete Template testing', () => {
         mockedRequest.delete.mockResolvedValue(successResponse({}));
         const result = await deleteTemplateApi('123',URL);
         expect(mockedRequest.delete).toHaveBeenCalledTimes(1);
-        expect(mockedRequest.delete).toHaveBeenCalledWith(TEMPLATE_DELETE_ENDPOINNT + '123');
+        expect(mockedRequest.delete).toHaveBeenCalledWith(TEMPLATES_DELETE + '123');
         expect(result).toEqual(successResponse({}));
     });
 
