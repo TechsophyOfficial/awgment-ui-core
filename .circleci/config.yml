@@ -28,10 +28,7 @@ jobs:
           
       - run: yarn install
       
-      - save_cache:
-          paths:
-               - node_modules
-             key: v1-dependencies-{{ checksum "package.json" }}
+      
       - run: yarn test
      
       - setup_remote_docker
