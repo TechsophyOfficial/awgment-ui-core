@@ -13,25 +13,33 @@ jobs:
   ui-core_build_test:
     working_directory: ~/ui-core 
     docker:
-      - image: cimg/node:17.2.0
+     - image: circleci/node:latest
+       auth: 
+          username: vsreddy430
+          password: $DOCKERHUB_PASSWORD
+    parameters:
+      docker-login:
+          type: string
+      docker-pass:
+          type: string
+      app-name:
+          type: string
     steps:
       - checkout
-      - run:
-          name: Update NPM
-          command: "sudo npm install -g npm@6.14.8"
       - restore_cache: 
-          key: dependency-cache-{{ checksum "package-lock.json" }}
+          keys: 
+               - v1-dependencies-{{ checksum "package-lock.json" }}
+               - v1-dependencies-
+          
       - run: 
-           name: Install Dependencies
-           command: npm install
-      - save_cache: 
-           key: dependency-cache-{{ checksum "package-lock.json" }}
-           paths:
-            - ./node_modules
-           
+           name: Prepare for testing
+           command: |
+               npm install --save-dev @testing-library/react
       - run:
-           name: Run tests
-           command: npm run test
+          name: Run unit-tests
+          command: |
+               npm run test a
+      - setup_remote_docker
       - run: |
           pwd
           ls
