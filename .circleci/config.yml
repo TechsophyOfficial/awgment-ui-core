@@ -26,14 +26,14 @@ jobs:
                - v1-dependencies-{{ checksum "package-lock.json" }}
                - v1-dependencies-
           
-      - run: 
-           name: Prepare for testing
-           command: |
-               npm install
-      - run:
-          name: Run unit-tests
-          command: |
-               npm run test a
+      - run: yarn install
+      
+      - save_cache:
+          paths:
+               - node_modules
+             key: v1-dependencies-{{ checksum "package-lock.json" }}
+      - run: yarn test
+     
       - setup_remote_docker
       - run: |
           pwd
