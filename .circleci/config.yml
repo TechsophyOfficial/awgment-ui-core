@@ -13,6 +13,7 @@ jobs:
   ui-core_build_test:
     working_directory: ~/awgment-ui-core 
     docker:
+     - image: circleci/python:3.6.8
      - image: circleci/node:latest
        auth: 
           username: vsreddy430
