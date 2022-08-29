@@ -1,5 +1,10 @@
-FROM node:17.2.0
+FROM node:12.6.0-alpine
 
+RUN apk update && apk add git
+
+RUN mkdir /ui-core
+
+COPY . /ui-core
 LABEL author="Sandeep Vemuganti"
 
 WORKDIR /ui-core
