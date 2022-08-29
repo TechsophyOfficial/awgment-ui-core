@@ -13,6 +13,15 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY . ./
+COPY ./ /ui-core
 
-CMD ["npm", "start"]
+RUN npm run build
+
+COPY --from=build /ui-core/build /usr/share/nginx/html
+COPY --from=build /ui-core/nginx/nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 80
+
+#CMD ["npm", "start"]
+
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
