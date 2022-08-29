@@ -17,7 +17,7 @@ COPY ./ /ui-core
 
 RUN npm run build
 
-COPY --from=build /ui-core/build /usr/share/nginx/html
+COPY --from=build /ui-core .
 COPY --from=build /ui-core/nginx/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
