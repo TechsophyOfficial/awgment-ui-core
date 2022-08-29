@@ -1,6 +1,7 @@
 version: 2.1
 
 orbs: 
+     docker: circleci/docker@0.5.13
      node: circleci/node@4.7.0
      heroku: circleci/heroku@1.2.6
 
@@ -21,12 +22,18 @@ jobs:
     
     steps:
       - checkout
+      - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@latest'
       - restore_cache: 
-          keys: 
-               - v1-dependencies-{{ checksum "package.json" }}
-               - v1-dependencies-
-          
-      - run: sudo npm install
+          key: dependency-cache-{{ checksum "package.json" }} 
+      - run: 
+          name: npm-install
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+             - ./node_modules
      
       - setup_remote_docker
       - run: |
