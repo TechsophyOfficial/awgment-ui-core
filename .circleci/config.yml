@@ -1,0 +1,15 @@
+version: 2.1
+
+workflows:
+   ui-deploy: 
+      jobs:
+        - ui-core
+
+jobs:
+  ui-core:
+    docker:
+      - image: cimg/node:14.13.0
+    steps:
+      - checkout
+      - run: node --version
+      
