@@ -1,15 +1,47 @@
 version: 2.1
 
+orbs: 
+     node: circleci/node@4.7.0
+     heroku: circleci/heroku@1.2.6
+
 workflows:
    ui-deploy: 
       jobs:
-        - ui-core
+        - ui-core_build_test
 
 jobs:
-  ui-core:
+  ui-core_build_test:
+    working_directory: ~/ui-core 
     docker:
-      - image: cimg/node:14.13.0
+      - image: cimg/node:17.2.0
     steps:
       - checkout
-      - run: node --version
+      - run:
+          name: Update NPM
+          command: "sudo npm install -g npm@5"
+      - restore_cache: 
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run: 
+           name: Install Dependencies
+           command: npm install
+      - save_cache: 
+           key: dependency-cache-{{ checksum "package-lock.json" }}
+           paths:
+            - ./node_modules
+           
+      - run:
+           name: Run tests
+           command: npm run test
+      - run: |
+          pwd
+          ls
+          ls build/*
+      - run: |
+          if [[ -z "$CIRCLE_TAG" ]] ;  then exit 1; fi
+          TAG=$CIRCLE_TAG
+          echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+          REPONAME = $CIRCLE_PROJECT_REPONAME
+          docker build . -t $DOCKER_USER/$REPONAME:$TAG
+          #docker tag $REPONAME:latest $DOCKER_USER/$REPONAME:$TAG
+          docker push $DOCKER_USER/$REPONAME:$TAG
       
