@@ -17,11 +17,11 @@ COPY ./ /ui-core
 
 RUN npm run build
 
-COPY --from=build /ui-core .
-COPY --from=build /ui-core/nginx/nginx.conf /etc/nginx/nginx.conf
+#COPY --from=build /ui-core .
+#COPY --from=build /ui-core/nginx/nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 80
+#EXPOSE 80
 
-#CMD ["npm", "start"]
+CMD ["npm", "start"]
 
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+#ENTRYPOINT ["nginx", "-g", "daemon off;"]
