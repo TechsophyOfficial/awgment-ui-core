@@ -17,13 +17,7 @@ jobs:
        auth: 
           username: vsreddy430
           password: $DOCKERHUB_PASSWORD
-    parameters:
-      docker-login:
-          type: string
-      docker-pass:
-          type: string
-      app-name:
-          type: string
+    
     steps:
       - checkout
       - restore_cache: 
