@@ -11,7 +11,7 @@ workflows:
 
 jobs:
   ui-core_build_test:
-    working_directory: ~/ui-core 
+    working_directory: ~/awgment-ui-core 
     docker:
      - image: circleci/node:latest
        auth: 
