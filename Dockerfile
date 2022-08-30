@@ -12,7 +12,7 @@ WORKDIR /ui-core
 
 COPY package*.json .
 
-RUN npm install
+RUN npm install --global windows-build-tools
 
 COPY . .
 
