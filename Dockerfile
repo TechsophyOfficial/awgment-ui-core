@@ -10,10 +10,10 @@ LABEL author="Sandeep Vemuganti"
 
 WORKDIR /ui-core
 
-COPY package*.json ./
+COPY package*.json .
 
 RUN npm install
 
-COPY . ./
+COPY . .
 
 CMD ["npm", "start"]
