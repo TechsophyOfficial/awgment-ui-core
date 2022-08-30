@@ -2,7 +2,8 @@ version: 2.1
 
 orbs: 
      docker: circleci/docker@0.5.13
-     node: circleci/node@14.19.2
+     python: circleci/python@2.0.3
+     node: circleci/node@5.0.2
      heroku: circleci/heroku@1.2.6
 
 workflows:
