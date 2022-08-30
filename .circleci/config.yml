@@ -1,11 +1,5 @@
 version: 2.1
 
-orbs: 
-     docker: circleci/docker@0.5.13
-     python: circleci/python@2.0.3
-     node: circleci/node@5.0.2
-     heroku: circleci/heroku@1.2.6
-
 workflows:
    ui-deploy: 
       jobs:
@@ -16,30 +10,23 @@ jobs:
     working_directory: ~/ui-core 
     docker:
      - image: circleci/node:latest
-       auth: 
-          username: vsreddy430
-          password: $DOCKERHUB_PASSWORD
     
     steps:
       - checkout
-      - run:
-          name: update-npm
-          command: 'sudo npm install -g npm@latest'
       - restore_cache: 
-          key: dependency-cache-{{ checksum "package.json" }} 
-      - run: 
-          name: npm-install
-          command: npm install --global windows-build-tools
+          keys: 
+            - v1-dependencies-{{ checksum "package.json" }} 
+            - v1-dependencies-
+      - run: npm install
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: v1-dependencies-{{ checksum "package.json" }}
           paths:
-             - ./node_modules
+             - node_modules
+             - ~/.npm
+             - ~/.cache
+      - run: npm test
      
       - setup_remote_docker
-      - run: |
-          pwd
-          ls
-          ls build/*
       - run: |
           if [[ -z "$CIRCLE_TAG" ]] ;  then exit 1; fi
           TAG=$CIRCLE_TAG
