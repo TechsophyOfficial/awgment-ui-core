@@ -1,0 +1,40 @@
+version: 2.1
+
+workflows:
+   ui-deploy: 
+      jobs:
+        - ui-core_build_test
+
+jobs:
+  ui-core_build_test:
+    working_directory: ~/.ui-core 
+    docker:
+     - image: circleci/node:latest
+    
+    steps:
+      - checkout
+      - restore_cache: 
+          keys: 
+            - v1-dependencies-{{ checksum "package.json" }} 
+            - v1-dependencies-
+      - run: npm config set prefix '~/.ui-core'
+      - run: export PATH=~/.ui-core/bin:$PATH
+      - run: npm install --legacy-peer-deps
+      - save_cache:
+          key: v1-dependencies-{{ checksum "package.json" }}
+          paths:
+             - node_modules
+             - ~/.npm
+             - ~/.cache
+      - run: npm test
+     
+      - setup_remote_docker
+      - run: |
+          if [[ -z "$CIRCLE_TAG" ]] ;  then exit 1; fi
+          TAG=$CIRCLE_TAG
+          echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+          REPONAME = $CIRCLE_PROJECT_REPONAME
+          docker build . -t $DOCKER_USER/$REPONAME:$TAG
+          #docker tag $REPONAME:latest $DOCKER_USER/$REPONAME:$TAG
+          docker push $DOCKER_USER/$REPONAME:$TAG
+      

@@ -1,4 +1,3 @@
-
 FROM nginx:1.20.1-alpine
 RUN rm -rf  /usr/share/nginx/html/*
 RUN mkdir -p /usr/share/nginx/html/model
@@ -9,3 +8,4 @@ COPY run.sh .
 
 EXPOSE 80 443
 CMD ["./run.sh"]
+
