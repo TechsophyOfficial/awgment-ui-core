@@ -14,7 +14,7 @@ import { DEFAULT_FONT, DEFAULT_FONT_SIZE, THEMES_KEYS, THEME_TITLES } from '../c
 import UploadDownloadTheme from './UploadDownloadTheme';
 import { DeleteConfirmModal } from '../components/common/DeleteConfimModal';
 import DataList from 'tsf_datalist/dist/components/dataList';
-
+import AppConfig from '../appConfig';
 interface Header {
     id: string;
     title: string;
@@ -72,6 +72,9 @@ function MyVerticallyCenteredModal(props) {
 }
 
 const ManageThemes = () => {
+    const appData: any = React.useContext(AppConfig);
+    const GATEWAY_URL = appData.apiGatewayUrl;
+
     const [themes, setThemes] = useState<any[]>([]);
     const [activeFontFamily, setActiveFontFamily] = useState(DEFAULT_FONT);
     const [headerProp, setHeaderProps] = useState<Header[]>(headerProps);
@@ -93,7 +96,7 @@ const ManageThemes = () => {
     const onSaveTheme = async (name: string): Promise<void> => {
         dispatch(showSpinner());
         const requestBody = getRequestBody(name);
-        const { success, message } = await createTheme(requestBody);
+        const { success, message } = await createTheme(requestBody, GATEWAY_URL);
         if (success) {
             dispatch(closeSpinner());
             setNameModalShow(false);
@@ -133,7 +136,7 @@ const ManageThemes = () => {
         dispatch(showSpinner());
         setEdit(true);
         setThemeId(id);
-        const { success, data } = await getTheme(id);
+        const { success, data } = await getTheme(id, GATEWAY_URL);
         if (success && data) {
             const contents = data ? data['content'] : {};
             const name = data?.name ? data.name : '';
@@ -181,7 +184,7 @@ const ManageThemes = () => {
     const deleteThemeFn = async (): Promise<void> => {
         setDeleteModalShow(false);
         dispatch(showSpinner());
-        const { success, message } = await deleteTheme(themeId);
+        const { success, message } = await deleteTheme(themeId, GATEWAY_URL);
         if (success) {
             dispatch(closeSpinner());
             updateThemesList();
@@ -205,7 +208,7 @@ const ManageThemes = () => {
     };
 
     const handleSearch = async (searchTerm: string): Promise<void> => {
-        const { success, data } = await getAllThemes({ searchTerm: searchTerm });
+        const { success, data } = await getAllThemes({ searchTerm: searchTerm, gatewayUrl: GATEWAY_URL });
         if (success && data) {
             setThemes(data);
         }

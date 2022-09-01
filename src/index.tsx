@@ -5,9 +5,15 @@ import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'formiojs/dist/formio.full.min.css';
 
-ReactDOM.render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>,
-    document.getElementById('root'),
-);
+fetch('../model/config.json')
+    .then(async (r) => (r.json()))
+    .then((config) => {
+        ReactDOM.render(
+            <React.StrictMode>
+                <App config={config} />
+            </React.StrictMode>,
+            document.getElementById('root'),
+        );
+    });
+
+    

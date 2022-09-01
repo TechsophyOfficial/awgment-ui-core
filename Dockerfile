@@ -1,19 +1,11 @@
-FROM node:12.6.0-alpine
+FROM nginx:1.20.1-alpine
+RUN rm -rf  /usr/share/nginx/html/*
+RUN mkdir -p /usr/share/nginx/html/model
+COPY build/. /usr/share/nginx/html/model
+RUN chown -R nginx:nginx /usr/share/nginx/html
+COPY env2Json.sh .
+COPY run.sh .
 
-RUN apk update && apk add git
+EXPOSE 80 443
+CMD ["./run.sh"]
 
-RUN mkdir /ui-core
-
-COPY . /ui-core
-
-LABEL author="Sandeep Vemuganti"
-
-WORKDIR /ui-core
-
-COPY package*.json .
-
-RUN npm install --global windows-build-tools
-
-COPY . .
-
-CMD ["npm", "start"]

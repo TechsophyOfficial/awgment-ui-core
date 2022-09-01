@@ -6,6 +6,7 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import NavItem, { Separator } from './NavBar/NavItem';
 import styled, { withTheme } from 'styled-components';
+import AppConfig from '../../appConfig';
 // import {
 //     ACCOUNTS_MODELER,
 //     ACCOUNT_USERS,
@@ -140,6 +141,9 @@ const Sidebar = () => {
     const [formLinks, setFormLinks] = useState<any>([]);
     const [componentLinks, setComponentLinks] = useState<any>([]);
 
+    const appData: any = React.useContext(AppConfig);
+    
+
     useEffect(() => {
         if (edit) {
             if (edit) {
@@ -151,15 +155,16 @@ const Sidebar = () => {
 
     useEffect(() => {
         const getData = async () => {
-            const data = await getMenu();
+            const GATEWAY_URL = appData.apiGatewayUrl;
+            const data = await getMenu(GATEWAY_URL);
             const formComponentsData = data.filter((obj) => obj.type === 'form');
             const genericComponentsData = data.filter((obj) => obj.type === 'component');
             setComponentLinks(genericComponentsData);
             setFormLinks(formComponentsData);
         };
-        getData();
+        if (appData) getData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [appData]);
 
     const content = (
         <DrawerWrapper variant="permanent" anchor="left" className="custom-scrollbar">

@@ -13097,10 +13097,10 @@ tsf_datalist@1.0.32:
     moment "^2.29.1"
     react-moment "^1.1.1"
 
-tsf_react_formio@^1.0.36:
-  version "1.0.37"
-  resolved "https://nexus.techsophy.com/nexus/repository/npm-group/tsf_react_formio/-/tsf_react_formio-1.0.37.tgz#860c6f3796a2eaba9c88c1034764aa49e6bd0c0c"
-  integrity sha512-znGX39p8rB6A8bOEK2xCo58Kv8/AE376NATcP4l1AXBxu/LfF861ZiDbR4unGEVcb83WSX4elAnuvrrvnqg0qA==
+tsf_react_formio@^1.0.38:
+  version "1.0.38"
+  resolved "https://nexus.techsophy.com/nexus/repository/npm-group/tsf_react_formio/-/tsf_react_formio-1.0.38.tgz#0ffb129b38701f11908258cd59653ee1cab179a8"
+  integrity sha512-OAKuadZLLZ8ojj7hB5RqW9G+XMKniQ9imYmnV+n1YnrVPrHcIotnyNN4AU0WrhuIMblbmgXHXDbXaEVZcJ7wLw==
   dependencies:
     "@craco/craco" "^5.7.0"
     "@emotion/react" "^11.7.1"

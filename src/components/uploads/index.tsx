@@ -24,12 +24,13 @@ import LinearProgress from '@mui/material/LinearProgress';
 import { downloadCsv } from 'services/UploadService';
 import axios from 'axios';
 import { UPLOAD_DOWNLOAD_ID } from '../../constants/common';
+import AppConfig from '../../appConfig';
 
 const Input = styledmaterilaui('input')({
     display: 'none',
 });
 
-const REUPLOAD = `${process.env.REACT_APP_API_GATEWAY_URL}${WORKFLOW_START}`;
+//const REUPLOAD = `${process.env.REACT_APP_API_GATEWAY_URL}${WORKFLOW_START}`;
 
 const fileTypes = [
     'xlsx',
@@ -40,6 +41,7 @@ const fileTypes = [
 ];
 
 export const Uploads = () => {
+    const appData: any = React.useContext(AppConfig);
     const [file, setFile] = React.useState<any>();
     const [category, setCategory] = React.useState('');
     const [fileStatus, setFileStatus] = React.useState(false);
@@ -48,13 +50,16 @@ export const Uploads = () => {
     const [iploadData, setUploadData] = React.useState(true);
     const [documentID, setDocumentID] = React.useState('');
     const [type, setType] = React.useState('');
-
     const [uploadedFile, setUploadedFile] = React.useState(null);
+
+    const REUPLOAD = `${appData.baseUrL}/api${WORKFLOW_START}`;
+    const GATEWAY_URL = appData.apiGatewayUrl;
+
     const handleChange = async (file: any) => {
         console.log('file....', file[0]);
         setFile(file);
         try {
-            let statusFromServer = await uploadCSV(file[0]?.name, file[0], category);
+            let statusFromServer = await uploadCSV(file[0]?.name, file[0], category, GATEWAY_URL);
             setFileStatus(true);
             console.log('file....', statusFromServer);
             if (statusFromServer.success) {
@@ -93,7 +98,7 @@ export const Uploads = () => {
         if (excelCheck.length > 0) {
             setExcelErrorText(false);
             setFileName(file.target.files[0]?.name);
-            uploadCSV(fileName, file.target.files[0], category);
+            uploadCSV(fileName, file.target.files[0], category, GATEWAY_URL);
         } else {
             setExcelErrorText(true);
         }
@@ -606,7 +611,7 @@ export const Uploads = () => {
                             }}
                             variant="outlined"
                             onClick={async () => {
-                                let data = await downloadCsv(UPLOAD_DOWNLOAD_ID);
+                                let data = await downloadCsv(UPLOAD_DOWNLOAD_ID, GATEWAY_URL);
                                 let response = data?.data;
                                 var csv = response;
                                 var downloadLink = document.createElement('a');
@@ -635,7 +640,7 @@ export const Uploads = () => {
                             }}
                             variant="outlined"
                             onClick={async () => {
-                                let data = await downloadCsv(UPLOAD_DOWNLOAD_ID);
+                                let data = await downloadCsv(UPLOAD_DOWNLOAD_ID, GATEWAY_URL);
                                 let response = data?.data;
                                 var csv = response;
                                 var downloadLink = document.createElement('a');
@@ -662,7 +667,7 @@ export const Uploads = () => {
                             }}
                             variant="outlined"
                             onClick={async () => {
-                                let data = await downloadCsv(UPLOAD_DOWNLOAD_ID);
+                                let data = await downloadCsv(UPLOAD_DOWNLOAD_ID, GATEWAY_URL);
                                 let response = data?.data;
                                 var csv = response;
                                 var downloadLink = document.createElement('a');

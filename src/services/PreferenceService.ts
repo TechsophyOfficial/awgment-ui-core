@@ -2,12 +2,14 @@ import { KEYCLOAK_IMAGES } from '../constants/common';
 import { USER_PREFERENCE } from '../constants/endpoints';
 import { request, ResponseProps } from '../request';
 
-export const UPLOAD_PROFILE_IMAGE = `${process.env.REACT_APP_API_GATEWAY_URL}${USER_PREFERENCE}`;
+//export const UPLOAD_PROFILE_IMAGE = `${process.env.REACT_APP_API_GATEWAY_URL}${USER_PREFERENCE}`;
 
 export const uploadProfileImage = async (
     file: string,
     name: string,
+    gatewayUrl: string,
 ): Promise<{ success: boolean; message?: string; data?: any }> => {
+    const UPLOAD_PROFILE_IMAGE = `${gatewayUrl}${USER_PREFERENCE}`;
     const blob = new Blob([file]);
     const fileOfBlob = new File([blob], `${name}`);
     const params = {

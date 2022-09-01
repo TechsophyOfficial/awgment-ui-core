@@ -2,8 +2,8 @@ import { request, ResponseProps } from '../request';
 import { FILE_UPLOADS, DOWNLOAD_ID } from '../constants/endpoints';
 import axios from 'axios';
 
-export const UPLOAD_CSV = `${process.env.REACT_APP_API_GATEWAY_URL}${FILE_UPLOADS}`;
-export const DOWNLOAD_CSV = `${process.env.REACT_APP_API_GATEWAY_URL}${DOWNLOAD_ID}`;
+//export const UPLOAD_CSV = `${process.env.REACT_APP_API_GATEWAY_URL}${FILE_UPLOADS}`;
+//export const DOWNLOAD_CSV = `${process.env.REACT_APP_API_GATEWAY_URL}${DOWNLOAD_ID}`;
 
 // export const uploadCSV = async (fileName: any, fileContent: any): Promise<{ success: boolean; message?: string }> => {
 //     //     const blob = new Blob([fileData]);
@@ -19,7 +19,9 @@ export const uploadCSV = async (
     fileName: string,
     file: File,
     type: string,
+    gatewayUrl: string,
 ): Promise<{ success: boolean; data?: any; message?: string }> => {
+    const UPLOAD_CSV = `${gatewayUrl}${FILE_UPLOADS}`;
     const blob = new Blob([file]);
     const fileOfBlob = new File([blob], `${fileName}.csv`);
     const params = {
@@ -34,7 +36,8 @@ export const uploadCSV = async (
     return { success: false };
 };
 
-export const downloadCsv = async (id: string) => {
+export const downloadCsv = async (id: string, gatewayUrl: string) => {
+    const DOWNLOAD_CSV = `${gatewayUrl}${DOWNLOAD_ID}`;
     let token = sessionStorage.getItem('react-token');
     const response = await axios.get(`${DOWNLOAD_CSV}${id}`, {
         headers: {

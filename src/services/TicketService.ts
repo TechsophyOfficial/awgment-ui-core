@@ -31,10 +31,11 @@ interface CreateTicketApiResponse {
     businessKey: string;
 }
 
-export const GET_FORM_ENDPOINT = `${process.env.REACT_APP_API_GATEWAY_URL}${FORMS}`;
-export const TICKET_CASE_ENDPOINT = `${process.env.REACT_APP_API_GATEWAY_URL}${TICKET_CASE_ENGINE}`;
+//export const GET_FORM_ENDPOINT = `${process.env.REACT_APP_API_GATEWAY_URL}${FORMS}`;
+//export const TICKET_CASE_ENDPOINT = `${process.env.REACT_APP_API_GATEWAY_URL}${TICKET_CASE_ENGINE}`;
 
-export const getTicketForm = async () => {
+export const getTicketForm = async (gatewayUrl: string) => {
+    const GET_FORM_ENDPOINT = `${gatewayUrl}${FORMS}`;
     const res: ResponseProps = (await request.get(`${GET_FORM_ENDPOINT}/${OPEN_TICKET_FORM_ID}`)) as ResponseProps;
     if (res.success) {
         // const { components } = res.data as FormProps;
@@ -47,7 +48,9 @@ export const getTicketForm = async () => {
 
 export const createTicket = async (
     ticketFormData: OpenTicketSubmitionData,
+    gatewayUrl: string,
 ): Promise<{ success: boolean; message: string }> => {
+    const TICKET_CASE_ENDPOINT = `${gatewayUrl}${TICKET_CASE_ENGINE}`;
     const reqObj: CreateTicketReqObj = {
         variables: ticketFormData,
         processDefinitionKey: OPEN_TICKET_PROCESS_DEFINITION_KEY,

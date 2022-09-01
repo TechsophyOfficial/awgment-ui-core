@@ -34,7 +34,8 @@ const ModelerLayout: React.FC = ({ children }) => {
     return (
         <div style={{ height: '100vh', overflow: 'auto' }}>
             <ModelerTopBar />
-            <div style={{ marginTop: '60px' }}>{children}</div>
+            {children ? <div style={{ marginTop: '60px' }}>{children}</div> : null}
+
             <FlashMessage />
         </div>
     );
