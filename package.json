@@ -16,8 +16,7 @@
         "font-picker-react": "^3.5.2",
         "history": "4.10.1",
         "keycloak-js": "9.0.2",
-        "node-gyp": "^7.1.0",
-        "node-sass": "^6.0.0",
+        "node-sass": "^4.14.1",
         "react": "^16.13.1",
         "react-bootstrap": "1.5.2",
         "react-dom": "^16.13.1",
@@ -40,6 +39,7 @@
     },
     "scripts": {
         "start": "craco start --no-cache",
+        "build:ci": "craco build",
         "build:development": "env-cmd -f .env.development craco build",
         "build:qa": "env-cmd -f .env.qa craco build",
         "build:production": "env-cmd -f .env.production craco build",
