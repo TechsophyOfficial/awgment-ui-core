@@ -29,12 +29,10 @@ jobs:
       - run: npm test
      
       - setup_remote_docker
-      - run: |
-          if [[ -z "$CIRCLE_TAG" ]] ;  then exit 1; fi
-          TAG=$CIRCLE_TAG
-          echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-          REPONAME = $CIRCLE_PROJECT_REPONAME
-          docker build . -t $DOCKER_USER/$REPONAME:$TAG
-          #docker tag $REPONAME:latest $DOCKER_USER/$REPONAME:$TAG
-          docker push $DOCKER_USER/$REPONAME:$TAG
+      - run: 
+          name: Publish Docker Image to Docker Hub
+          command: |
+           echo “$DOCKER_PASSWORD” | docker login -u “$DOCKERHUB_USERNAME” — password-stdin
+           docker build -t $UI_CORE_IMAGE_NAME .
+           docker push $IMAGE_NAME:latest
       
