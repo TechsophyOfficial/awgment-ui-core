@@ -9,7 +9,7 @@ jobs:
   ui-core_build_test:
     working_directory: ~/.ui-core 
     docker:
-     - image: circleci/node:14.20.0
+     - image: circleci/node:latest
     
     steps:
       - checkout
