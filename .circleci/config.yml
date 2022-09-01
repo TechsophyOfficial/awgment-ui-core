@@ -9,7 +9,7 @@ jobs:
   ui-core_build_test:
     working_directory: ~/.ui-core 
     docker:
-     - image: circleci/node:latest
+     - image: circleci/node:14.20.0
     
     steps:
       - checkout
@@ -19,6 +19,8 @@ jobs:
             - v1-dependencies-
       - run: npm config set prefix '~/.ui-core'
       - run: export PATH=~/.ui-core/bin:$PATH
+      - run: npm install -g node-gyp
+      - run: npm install -g node-sass
       - run: npm install --legacy-peer-deps
       - save_cache:
           key: v1-dependencies-{{ checksum "package.json" }}
