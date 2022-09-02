@@ -27,11 +27,13 @@ jobs:
              - node_modules
              - ~/.npm
              - ~/.cache
-      - run: |
-          TMP_CI=$CI
-          CI=""
-          npm run build
-          CI=$TMP_CI    
+      - run:
+          command: | 
+            echo $CI
+            TMP_CI=$CI
+            CI=""
+            npm run build
+            CI=$TMP_CI
       - setup_remote_docker
       - run: 
           name: Publish Docker Image to Docker Hub
