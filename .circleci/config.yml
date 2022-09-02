@@ -12,9 +12,9 @@ jobs:
     
     steps:
       - checkout
-      - restore_cache: 
-          keys: 
-            - v1-dependencies-{{ checksum "package.json" }} 
+      # - restore_cache: 
+      #     keys: 
+      #       - v1-dependencies-{{ checksum "package.json" }} 
       # - run: npm config set prefix '~/.ui-core'
       # - run: export PATH=~/.ui-core/bin:$PATH
       # - run: npm install -g node-gyp
