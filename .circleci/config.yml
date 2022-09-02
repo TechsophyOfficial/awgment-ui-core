@@ -3,37 +3,35 @@ version: 2.1
 workflows:
    ui-deploy: 
       jobs:
-        - ui-core_build_test
+        - uiBuild
 
 jobs:
-  ui-core_build_test:
-    working_directory: ~/.ui-core 
+  uiBuild:
     docker:
-     - image: cimg/node:14.20.0
+     - image: cimg/node:14.20.0-browsers
     
     steps:
       - checkout
       - restore_cache: 
           keys: 
             - v1-dependencies-{{ checksum "package.json" }} 
-            - v1-dependencies-
-      - run: npm config set prefix '~/.ui-core'
-      - run: export PATH=~/.ui-core/bin:$PATH
-      - run: npm install -g node-gyp
-      - run: npm install -g node-sass
-      - run: npm install --legacy-peer-deps
+      # - run: npm config set prefix '~/.ui-core'
+      # - run: export PATH=~/.ui-core/bin:$PATH
+      # - run: npm install -g node-gyp
+      # - run: npm install -g node-sass
+      # - run: npm install --legacy-peer-deps
+      - run: npm install      
       - save_cache:
           key: v1-dependencies-{{ checksum "package.json" }}
           paths:
              - node_modules
              - ~/.npm
              - ~/.cache
-      - run: npm test
-     
+      - run: npm run build    
       - setup_remote_docker
       - run: 
           name: Publish Docker Image to Docker Hub
           command: |
            echo "$DOCKER_PASSWORD" | docker login -u $DOCKERHUB_USERNAME --password-stdin
-           docker build -t $UI_CORE_IMAGE_NAME .
-           docker push $UI_CORE_IMAGE_NAME:1.2
+           docker build -t $REPONAME:2.0-RC1 .
+           docker push $REPONAME:2.0-RC1
