@@ -12,17 +12,15 @@ jobs:
     
     steps:
       - checkout
-      # - restore_cache: 
-      #     keys: 
-      #       - v1-dependencies-{{ checksum "package.json" }} 
+      - restore_cache: 
+          keys: 
+            - v1-dependencies-{{ checksum "package.json" }} 
       # - run: npm config set prefix '~/.ui-core'
       # - run: export PATH=~/.ui-core/bin:$PATH
       # - run: npm install -g node-gyp
       # - run: npm install -g node-sass
       # - run: npm install --legacy-peer-deps
-      - run: |
-          CI=false 
-          npm install      
+      - run: npm install --loglevel=error       
       - save_cache:
           key: v1-dependencies-{{ checksum "package.json" }}
           paths:
