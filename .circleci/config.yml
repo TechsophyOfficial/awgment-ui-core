@@ -40,5 +40,5 @@ jobs:
           command: |
            echo "$DOCKER_PASSWORD" | docker login -u $DOCKERHUB_USERNAME --password-stdin
            REPONAME=$CIRCLE_PROJECT_REPONAME
-           docker build -t vsreddy430/$REPONAME:latest .
-           docker push vsreddy430/$REPONAME:latest
+           docker build -t $DOCKERHUB_USERNAME/$REPONAME:2.0-RC1 .
+           docker push $DOCKERHUB_USERNAME/$REPONAME:2.0-RC1
