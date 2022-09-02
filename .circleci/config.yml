@@ -20,14 +20,18 @@ jobs:
       # - run: npm install -g node-gyp
       # - run: npm install -g node-sass
       # - run: npm install --legacy-peer-deps
-      - run: npm install --loglevel=error       
+      - run: npm install 
       - save_cache:
           key: v1-dependencies-{{ checksum "package.json" }}
           paths:
              - node_modules
              - ~/.npm
              - ~/.cache
-      - run: npm run build    
+      - run: |
+          TMP_CI=$CI
+          CI=""
+          npm run build
+          CI=$TMP_CI    
       - setup_remote_docker
       - run: 
           name: Publish Docker Image to Docker Hub
