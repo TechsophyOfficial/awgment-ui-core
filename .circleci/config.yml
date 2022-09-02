@@ -20,7 +20,9 @@ jobs:
       # - run: npm install -g node-gyp
       # - run: npm install -g node-sass
       # - run: npm install --legacy-peer-deps
-      - run: npm install      
+      - run: |
+          CI=false 
+          npm install      
       - save_cache:
           key: v1-dependencies-{{ checksum "package.json" }}
           paths:
