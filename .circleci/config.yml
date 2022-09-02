@@ -33,5 +33,6 @@ jobs:
           name: Publish Docker Image to Docker Hub
           command: |
            echo "$DOCKER_PASSWORD" | docker login -u $DOCKERHUB_USERNAME --password-stdin
+           REPONAME=$CIRCLE_PROJECT_REPONAME
            docker build -t $REPONAME:2.0-RC1 .
            docker push $REPONAME:2.0-RC1
