@@ -38,7 +38,9 @@ jobs:
       - run: 
           name: Publish Docker Image to Docker Hub
           command: |
+           if [[ -z "$CIRCLE_TAG" ]] ;  then exit 1; fi
+            TAG=$CIRCLE_TAG
            echo "$DOCKER_PASSWORD" | docker login -u $DOCKERHUB_USERNAME --password-stdin
            REPONAME=$CIRCLE_PROJECT_REPONAME
-           docker build -t $DOCKERHUB_USERNAME/$REPONAME:2.0-RC1 .
-           docker push $DOCKERHUB_USERNAME/$REPONAME:2.0-RC1
+           docker build -t $DOCKERHUB_USERNAME/$REPONAME:TAG .
+           docker push $DOCKERHUB_USERNAME/$REPONAME:TAG
