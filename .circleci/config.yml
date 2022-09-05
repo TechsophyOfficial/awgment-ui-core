@@ -42,5 +42,5 @@ jobs:
             TAG=$CIRCLE_TAG
            echo "$DOCKER_PASSWORD" | docker login -u $DOCKERHUB_USERNAME --password-stdin
            REPONAME=$CIRCLE_PROJECT_REPONAME
-           docker build -t $DOCKERHUB_USERNAME/$REPONAME:TAG .
-           docker push $DOCKERHUB_USERNAME/$REPONAME:TAG
+           docker build -t $DOCKERHUB_USERNAME/$REPONAME:$TAG .
+           docker push $DOCKERHUB_USERNAME/$REPONAME:$TAG
