@@ -30,7 +30,6 @@ const App = (props) => {
     });
 
     const history = props.history ? props.history : defaultHistory;
-    
 
     const realm = urlRealm ? urlRealm : storedRealm ? storedRealm : config.keyCloakRealm;
     sessionStorage.setItem('theme-loaded', 'false');
@@ -95,9 +94,9 @@ const App = (props) => {
                         <Provider store={store}>
                             <Spinner />
                             <AppConfig.Provider value={config}>
-                                <Navigator history={history} config={config}/>
+                                <Navigator history={history} config={config} />
+                                <LoadSxpChat />
                             </AppConfig.Provider>
-                            <LoadSxpChat />
                         </Provider>
                     </LocaleProvider>
                 </ThemeContextProvider>
