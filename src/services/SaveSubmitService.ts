@@ -12,9 +12,10 @@ interface FormProps {
     version: number;
 }
 
-export const GET_FORM_ENDPOINT = `${process.env.REACT_APP_API_GATEWAY_URL}${FORMS}`;
+//export const GET_FORM_ENDPOINT = `${process.env.REACT_APP_API_GATEWAY_URL}${FORMS}`;
 
-export const getSaveSubmitForm = async () => {
+export const getSaveSubmitForm = async (gatewayUrl: string) => {
+    const GET_FORM_ENDPOINT = `${gatewayUrl}${FORMS}`;
     const res: ResponseProps = (await request.get(`${GET_FORM_ENDPOINT}/${SAVE_SUBMIT_FORM_ID}`)) as ResponseProps;
     if (res.success) {
         const data = res.data as FormProps;
@@ -23,7 +24,8 @@ export const getSaveSubmitForm = async () => {
     return {};
 };
 
-export const getViewTicketForm = async () => {
+export const getViewTicketForm = async (gatewayUrl: string) => {
+    const GET_FORM_ENDPOINT = `${gatewayUrl}${FORMS}`;
     const res: ResponseProps = (await request.get(`${GET_FORM_ENDPOINT}/${VIEW_TICKET_FORM_ID}`)) as ResponseProps;
     if (res.success) {
         const data = res.data as FormProps;
@@ -36,7 +38,8 @@ export const getViewTicketForm = async () => {
 
 // new 2
 
-export const getDoctorConsultationForm = async () => {
+export const getDoctorConsultationForm = async (gatewayUrl: string) => {
+    const GET_FORM_ENDPOINT = `${gatewayUrl}${FORMS}`;
     const res: ResponseProps = (await request.get(
         `${GET_FORM_ENDPOINT}/${Doctor_Consultation_FORM_ID}`,
     )) as ResponseProps;
@@ -47,7 +50,8 @@ export const getDoctorConsultationForm = async () => {
     return {};
 };
 
-export const getViewDoctorConsultanciesForm = async () => {
+export const getViewDoctorConsultanciesForm = async (gatewayUrl: string) => {
+    const GET_FORM_ENDPOINT = `${gatewayUrl}${FORMS}`;
     const res: ResponseProps = (await request.get(
         `${GET_FORM_ENDPOINT}/${View_Doctor_Consultancies_FORM_ID}`,
     )) as ResponseProps;

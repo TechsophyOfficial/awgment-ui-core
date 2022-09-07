@@ -11,6 +11,7 @@ import { deleteTheme, downloadThemeApi, uploadThemeApi } from '../services/Theme
 import { ThemeContext } from './ThemeContext';
 import { DeleteConfirmModal } from '../components/common/DeleteConfimModal';
 import defaultTheme from './defaultTheme.json';
+import AppConfig from '../appConfig';
 
 const MyVerticallyCenteredModal = (props) => {
     const [name, setName] = useState('');
@@ -59,6 +60,9 @@ const MyVerticallyCenteredModal = (props) => {
 };
 
 const UploadDownloadTheme = (props) => {
+    const appData: any = React.useContext(AppConfig);
+    const GATEWAY_URL = appData.apiGatewayUrl;
+
     const [fileContent, setFileContent] = useState<string>('');
     const dispatch = useDispatch();
     const [activeThemeId, setActiveThemeId] = useState(props.themeId);
@@ -89,7 +93,7 @@ const UploadDownloadTheme = (props) => {
     const downloadFile = async () => {
         dispatch(showSpinner());
         dispatch(showSpinner());
-        const { success, data } = await downloadThemeApi(activeThemeId);
+        const { success, data } = await downloadThemeApi(activeThemeId, GATEWAY_URL);
         if (success && data) {
             // Create blob link to download
             const url = window.URL.createObjectURL(new Blob([JSON.stringify(data)]));
@@ -142,7 +146,7 @@ const UploadDownloadTheme = (props) => {
     const deleteFile = async (): Promise<void> => {
         setDeleteModalShow(false);
         dispatch(showSpinner());
-        const { success, message } = await deleteTheme(activeThemeId);
+        const { success, message } = await deleteTheme(activeThemeId, GATEWAY_URL);
         if (success) {
             resetData();
             dispatch(closeSpinner());
@@ -160,7 +164,7 @@ const UploadDownloadTheme = (props) => {
     const onUploadTheme = async (name: string): Promise<void> => {
         setNameModalShow(false);
         dispatch(showSpinner());
-        const { success, message } = await uploadThemeApi(name, fileContent);
+        const { success, message } = await uploadThemeApi(name, fileContent, GATEWAY_URL);
         if (success) {
             resetData();
             updateThemesList();

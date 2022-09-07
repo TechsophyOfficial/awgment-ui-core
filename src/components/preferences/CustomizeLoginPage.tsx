@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import { closeSpinner, showFlashMessage, showSpinner } from '../../actions/common';
 import { Typography } from '@material-ui/core';
 import fileUploadState from '../../assets/images/states/uploadFile.png';
+import AppConfig from '../../appConfig';
 
 const CustomizeLoginPage = (props) => {
     // const [fileContent, setFileContent] = useState<string>('');
@@ -22,6 +23,9 @@ const CustomizeLoginPage = (props) => {
     const logoRef = React.createRef<any>();
     const bgEmptyStateRef = React.createRef<any>();
     const logoEmptyStateRef = React.createRef<any>();
+
+    const appData: any = React.useContext(AppConfig);
+    const BASE_URL = appData.baseUrl;
 
     const hasTenantRole = (roles) => {
         let role_exist = false;
@@ -71,7 +75,7 @@ const CustomizeLoginPage = (props) => {
 
     const onUploadBgImage = async (): Promise<void> => {
         dispatch(showSpinner());
-        const { success, message } = await uploadKeycloakThemeImageApi(bg, BG_IMAGE_NAME);
+        const { success, message } = await uploadKeycloakThemeImageApi(bg, BG_IMAGE_NAME, BASE_URL);
         if (success) {
             dispatch(closeSpinner());
             dispatch(showFlashMessage({ successMessage: message }));
@@ -83,7 +87,7 @@ const CustomizeLoginPage = (props) => {
 
     const onUploadLogoImage = async (): Promise<void> => {
         dispatch(showSpinner());
-        const { success, message } = await uploadKeycloakThemeImageApi(logo, LOGO_IMAGE_NAME);
+        const { success, message } = await uploadKeycloakThemeImageApi(logo, LOGO_IMAGE_NAME, BASE_URL);
         if (success) {
             dispatch(closeSpinner());
             dispatch(showFlashMessage({ successMessage: message }));
