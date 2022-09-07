@@ -10,7 +10,7 @@ workflows:
             branches:
               ignore: /.*/
 jobs:
-  uiBuild:
+  releaseUI:
     docker:
      - image: cimg/node:14.20.0-browsers
     
@@ -44,7 +44,7 @@ jobs:
           command: |
            if [[ -z "$CIRCLE_TAG" ]] ;  then exit 1; fi
             TAG=$CIRCLE_TAG
-           echo "$DOCKER_PASSWORD" | docker login -u $DOCKERHUB_USERNAME --password-stdin
-           REPONAME=$CIRCLE_PROJECT_REPONAME
-           docker build -t $DOCKERHUB_USERNAME/$REPONAME:$TAG .
-           docker push $DOCKERHUB_USERNAME/$REPONAME:$TAG
+           echo $TS_DOCKER_PUB_PASS | docker login -u $TS_DOCKER_PUB_USR --password-stdin
+           REPONAME=$TS_DOCKER_PUB_USR/$CIRCLE_PROJECT_REPONAME
+           docker build -t $REPONAME:$TAG . 
+           docker push $REPONAME:$TAG
