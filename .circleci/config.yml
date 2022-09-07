@@ -1,9 +1,9 @@
 version: 2.1
 
 workflows:
-   ui-deploy: 
-      jobs:
-        - releaseUI:
+  tagged-release: 
+    jobs:
+      - releaseUI:
           context: ossContext
           filters:
             tags:
