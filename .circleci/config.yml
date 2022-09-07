@@ -3,7 +3,8 @@ version: 2.1
 workflows:
    ui-deploy: 
       jobs:
-        - uiBuild:
+        - releaseUI:
+          context: ossContext
           filters:
             tags:
               only: /^v.*/
