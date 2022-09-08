@@ -26,7 +26,7 @@ const App = (props) => {
     const config = props.config;
 
     const defaultHistory = createBrowserHistory({
-        basename: config.publicUrl ? config.publicUrl : '/',
+        basename: config.publicCoresUrl ? config.publicCoresUrl : '/',
     });
 
     const history = props.history ? props.history : defaultHistory;
