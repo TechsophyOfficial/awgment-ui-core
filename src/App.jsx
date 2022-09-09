@@ -89,7 +89,7 @@ const App = (props) => {
             authClient={keycloak}
             onEvent={handleEvent}>
             <QueryClientProvider client={queryClient}>
-                <ThemeContextProvider>
+                <ThemeContextProvider config={config}>
                     <LocaleProvider>
                         <Provider store={store}>
                             <Spinner />
