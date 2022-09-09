@@ -4,7 +4,6 @@ import { INITIAL_THEME } from 'constants/common';
 import React, { useEffect } from 'react';
 import { getAllThemes, getUserTheme, ThemeInstance } from '../services/ThemeService';
 import defaultTheme from './defaultTheme.json';
-import AppConfig from '../appConfig';
 
 interface userPreferences {
     id: string;
@@ -25,9 +24,8 @@ interface State {
 }
 
 export const ThemeContext = React.createContext({} as State);
-export const ThemeContextProvider = ({ children }) => {
-    const appData: any = React.useContext(AppConfig);
-    const GATEWAY_URL = appData.apiGatewayUrl;
+export const ThemeContextProvider = ({ children, config }) => {
+    const GATEWAY_URL = config.apiGatewayUrl;
 
     const [theme, setTheme] = React.useState<unknown>(defaultTheme);
     const [themes, setThemes] = React.useState<ThemeInstance[]>([]);
@@ -41,7 +39,7 @@ export const ThemeContextProvider = ({ children }) => {
 
     const getDbThemes = async () => {
         //Call theme api (to get all themes)
-        const { success, data } = await getAllThemes({ paginate: false });
+        const { success, data } = await getAllThemes({ paginate: false, gatewayUrl:GATEWAY_URL });
         if (success && data) {
             const allThemes = data;
             setThemes(allThemes);
