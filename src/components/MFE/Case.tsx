@@ -6,8 +6,8 @@ import AppConfig from '../../appConfig';
 
 const Case = ({ history }) => {
     const appData: any = React.useContext(AppConfig);
-    const commonHost = appData.baseUrL;
-    const caseHost = `${appData.baseUrL}/model/case`;
+    const commonHost = appData.baseUrl;
+    const caseHost = `${appData.baseUrl}/model/case`;
     return (
         <div>
             <MicroFrontend history={history} host={caseHost} name="CaseMFE" mainhost={commonHost} />
