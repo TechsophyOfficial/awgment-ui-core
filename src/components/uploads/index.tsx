@@ -52,7 +52,7 @@ export const Uploads = () => {
     const [type, setType] = React.useState('');
     const [uploadedFile, setUploadedFile] = React.useState(null);
 
-    const REUPLOAD = `${appData.baseUrL}/api${WORKFLOW_START}`;
+    const REUPLOAD = `${appData.baseUrl}/api${WORKFLOW_START}`;
     const GATEWAY_URL = appData.apiGatewayUrl;
 
     const handleChange = async (file: any) => {

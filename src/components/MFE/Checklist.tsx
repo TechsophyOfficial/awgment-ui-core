@@ -6,8 +6,8 @@ import AppConfig from '../../appConfig';
 
 const Checklist = ({ history }) => {
     const appData: any = React.useContext(AppConfig);
-    const commonHost = appData.baseUrL;
-    const checklistHost = `${appData.baseUrL}/model/checklist`;
+    const commonHost = appData.baseUrl;
+    const checklistHost = `${appData.baseUrl}/model/checklist`;
     return (
         <div>
             <MicroFrontend history={history} host={checklistHost} name="ChecklistMFE" mainhost={commonHost} />

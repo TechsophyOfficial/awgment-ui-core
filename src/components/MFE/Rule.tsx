@@ -6,8 +6,8 @@ import AppConfig from '../../appConfig';
 
 const Rule = ({ history }) => {
     const appData: any = React.useContext(AppConfig);
-    const commonHost = appData.baseUrL;
-    const ruleHost = `${appData.baseUrL}/model/rules`;
+    const commonHost = appData.baseUrl;
+    const ruleHost = `${appData.baseUrl}/model/rules`;
     
     return (
         <div>

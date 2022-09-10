@@ -6,8 +6,8 @@ import AppConfig from '../../appConfig';
 
 const Workflow = ({ history }) => {
     const appData: any = React.useContext(AppConfig);
-    const commonHost = appData.baseUrL;
-    const workflowHost = `${appData.baseUrL}/model/process`;
+    const commonHost = appData.baseUrl;
+    const workflowHost = `${appData.baseUrl}/model/process`;
     return (
         <div>
             <MicroFrontend history={history} host={workflowHost} name="WorkflowMFE" mainhost={commonHost} />

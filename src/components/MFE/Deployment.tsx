@@ -6,8 +6,8 @@ import AppConfig from '../../appConfig';
 
 const Deployment = ({ history }) => {
     const appData: any = React.useContext(AppConfig);
-    const commonHost = appData.baseUrL;
-    const host = `${appData.baseUrL}/model/deployment`;
+    const commonHost = appData.baseUrl;
+    const host = `${appData.baseUrl}/model/deployment`;
     return (
         <div>
             <MicroFrontend history={history} host={host} name="DeploymentMFE" mainhost={commonHost} />

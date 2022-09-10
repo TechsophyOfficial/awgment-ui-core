@@ -1,5 +1,5 @@
 {
-    "baseUrL": "https://techsophy-platform.techsophy.com",
+    "baseUrl": "https://techsophy-platform.techsophy.com",
     "apiGatewayUrl": "https://api-gateway.techsophy.com/api",
     "keyCloakUrl": "https://keycloak-tsplatform.techsophy.com/",
     "keyCloakRealm": "techsophy-platform",

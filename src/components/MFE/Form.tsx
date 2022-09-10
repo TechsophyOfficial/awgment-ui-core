@@ -6,8 +6,8 @@ import AppConfig from '../../appConfig';
 
 const Form = ({ history }) => {
     const appData: any = React.useContext(AppConfig);
-    const commonHost = appData.baseUrL;
-    const host = `${appData.baseUrL}/model/forms`;
+    const commonHost = appData.baseUrl;
+    const host = `${appData.baseUrl}/model/forms`;
     return (
         <div>
             <MicroFrontend history={history} host={host} name="FormMFE" mainhost={commonHost} />
