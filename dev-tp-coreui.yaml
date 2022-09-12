@@ -18,8 +18,8 @@ spec:
       - image: tsdevopsteam/platform:core-ui-$BUILD_NUMBER
         name: core-ui
          envFrom:
-        - configMapRef:
-            name: coreui-env
+         - configMapRef:
+             name: coreui-env
         ports:
         - containerPort: 80
       imagePullSecrets:
