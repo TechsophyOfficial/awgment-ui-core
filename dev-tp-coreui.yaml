@@ -17,7 +17,7 @@ spec:
       containers:
       - image: tsdevopsteam/platform:core-ui-$BUILD_NUMBER
         name: core-ui
-         envFrom:
+        envFrom:
         - configMapRef:
             name: coreui-env
         ports:
