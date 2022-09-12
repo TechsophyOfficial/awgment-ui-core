@@ -82,7 +82,7 @@ const ModelerRoute = ({ component: Component, ...restProps }): React.ReactElemen
 
 const Navigator = ({ history, config }: any): React.ReactElement => {
     const commonHost = config.baseUrl;
-    const accountsHost = `${config.baseUrl}/account`;
+    const accountsHost = `${config.baseUrl}/accounts`;
     const caseInboxHost = `${config.baseUrl}/case-inbox`;
     const formHost = `${config.baseUrl}/model/forms`;
     const templatesHost = `${config.baseUrl}/model/templates`;
