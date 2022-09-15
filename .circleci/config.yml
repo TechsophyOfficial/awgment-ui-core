@@ -6,7 +6,10 @@ workflows:
       - imagePush:
           requires:
             - ciBuild # only deploy if the ciBuild job has completed
+          context: ossContext
           filters:
+            tags:
+              only: /^v.*/
             branches:
               only: cibuild
 jobs:
@@ -48,7 +51,7 @@ jobs:
           command: |
            if [[ -z "$CIRCLE_TAG" ]] ;  then exit 1; fi
             TAG=$CIRCLE_TAG
-           echo $TS_DOCKER_PUB_PASS | docker login -u $TS_DOCKER_PUB_USR --password-stdin
-           REPONAME=$TS_DOCKER_PUB_USR/$CIRCLE_PROJECT_REPONAME
+           echo $DOCKER_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+           REPONAME=$DOCKERHUB_USERNAME/$CIRCLE_PROJECT_REPONAME
            docker build -t $REPONAME:$TAG . 
            docker push $REPONAME:$TAG
