@@ -42,6 +42,9 @@ jobs:
   imagePush:
     docker:
       - image: docker:17.05.0-ce-git
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKER_PASSWORD
     steps:
       - checkout
       - setup_remote_docker
@@ -50,7 +53,7 @@ jobs:
           command: |
            if [[ -z "$CIRCLE_TAG" ]] ;  then exit 1; fi
             TAG=$CIRCLE_TAG
-           echo $DOCKER_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+
            REPONAME=$DOCKERHUB_USERNAME/$CIRCLE_PROJECT_REPONAME
            docker build -t $REPONAME:$TAG . 
            docker push $REPONAME:$TAG
