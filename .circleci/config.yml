@@ -39,6 +39,7 @@ jobs:
             echo "CI Value:" $CI
             TMP_CI=$CI
             CI=""
+            sudo mkdir ./ui-core
             npm run build
             CI=$TMP_CI
       - persist_to_workspace:
