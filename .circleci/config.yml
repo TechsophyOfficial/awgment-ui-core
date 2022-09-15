@@ -5,7 +5,7 @@ workflows:
       - ciBuild
       - imagePush:
           requires:
-            - ciBuild # only deploy if the ciBuild job has completed
+            - ciBuild
           context: ossContext
           filters:
             tags:
@@ -37,12 +37,12 @@ jobs:
             echo "CI Value:" $CI
             TMP_CI=$CI
             CI=""
-            sudo mkdir ./ui-core
             npm run build
             CI=$TMP_CI
   imagePush:
     docker:
      - image: cimg/node:14.20.0-browsers
+    executor:
     steps:
       - checkout
       - setup_remote_docker
