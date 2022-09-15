@@ -1,20 +1,18 @@
 version: 2.1
-
-orbs:
-  heroku: circleci/heroku@1.2.6
-
 workflows:
-  tagged-release: 
+  ci-build-release: 
     jobs:
-      - releaseUI:
+      - ciBuild
+      - imagePush:
+          requires:
+            - ciBuild # only deploy if the ciBuild job has completed
           filters:
             branches:
-              only: cibuild # only deploy when on cibuild
+              only: cibuild
 jobs:
-  releaseUI:
+  ciBuild:
     docker:
      - image: cimg/node:14.20.0-browsers
-    
     steps:
       - checkout
       - restore_cache: 
@@ -39,3 +37,18 @@ jobs:
             sudo mkdir ./ui-core
             npm run build
             CI=$TMP_CI
+  imagePush:
+    docker:
+     - image: cimg/node:14.20.0-browsers
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: 
+          name: Publish Docker Image to Docker Hub
+          command: |
+           if [[ -z "$CIRCLE_TAG" ]] ;  then exit 1; fi
+            TAG=$CIRCLE_TAG
+           echo $TS_DOCKER_PUB_PASS | docker login -u $TS_DOCKER_PUB_USR --password-stdin
+           REPONAME=$TS_DOCKER_PUB_USR/$CIRCLE_PROJECT_REPONAME
+           docker build -t $REPONAME:$TAG . 
+           docker push $REPONAME:$TAG
