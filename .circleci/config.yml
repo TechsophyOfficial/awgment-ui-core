@@ -1,9 +1,12 @@
 version: 2.1
 
+orbs:
+  heroku: circleci/heroku@1.2.6
+
 workflows:
   tagged-release: 
     jobs:
-      - releaseUI:
+      - releaseUI
       - deploy:
           requires:
             - releaseUI # only deploy if the releaseUI job has completed
@@ -17,8 +20,16 @@ jobs:
     
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: npm
+      - restore_cache: 
+          keys: 
+            - v1-dependencies-{{ checksum "package.json" }} 
+      - run: npm install 
+      - save_cache:
+          key: v1-dependencies-{{ checksum "package.json" }}
+          paths:
+             - node_modules
+             - ~/.npm
+             - ~/.cache
       - run:
           command: npm run test
           name: Run tests
@@ -34,3 +45,10 @@ jobs:
           root: ~/ui-core
           paths:
             - .
+  deploy: # this can be any name you choose
+    executor: heroku/default
+    steps:
+      - attach_workspace:
+          at: ~/ui-core
+      - heroku/deploy-via-git:
+          force: true
