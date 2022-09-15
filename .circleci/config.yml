@@ -6,10 +6,7 @@ orbs:
 workflows:
   tagged-release: 
     jobs:
-      - releaseUI
-      - deploy:
-          requires:
-            - releaseUI # only deploy if the releaseUI job has completed
+      - releaseUI:
           filters:
             branches:
               only: cibuild # only deploy when on cibuild
@@ -42,14 +39,3 @@ jobs:
             sudo mkdir ./ui-core
             npm run build
             CI=$TMP_CI
-      - persist_to_workspace:
-          root: ~/ui-core
-          paths:
-            - .
-  deploy: # this can be any name you choose
-    executor: heroku/default
-    steps:
-      - attach_workspace:
-          at: ~/ui-core
-      - heroku/deploy-via-git:
-          force: true
