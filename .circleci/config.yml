@@ -41,8 +41,7 @@ jobs:
             CI=$TMP_CI
   imagePush:
     docker:
-     - image: cimg/node:14.20.0-browsers
-    executor:
+      - image: docker:17.05.0-ce-git
     steps:
       - checkout
       - setup_remote_docker
