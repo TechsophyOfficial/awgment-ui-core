@@ -95,7 +95,7 @@ const App = (props) => {
                             <Spinner />
                             <AppConfig.Provider value={config}>
                                 <Navigator history={history} config={config} />
-                                <LoadSxpChat />
+                                {/* <LoadSxpChat /> */}
                             </AppConfig.Provider>
                         </Provider>
                     </LocaleProvider>
