@@ -1,21 +1,36 @@
 version: 2.1
+
+parameters:
+  GHA_Event:
+    type: string
+    default: ""
+  GHA_Actor:
+    type: string
+    default: ""
+  GHA_Action:
+    type: string
+    default: ""
+  GHA_Meta:
+    type: string
+    default: ""
+
 workflows:
-  ci-build-release: 
+  tagged-release: 
+    when:
+      equal: [ "release", << pipeline.parameters.GHA_Event >> ]
     jobs:
-      - ciBuild
-      - imagePush:
-          requires:
-            - ciBuild
+      - releaseUI:
           context: ossContext
           filters:
             tags:
               only: /^v.*/
             branches:
-              only: cibuild
+              ignore: cibuild
 jobs:
-  ciBuild:
+  releaseUI:
     docker:
      - image: cimg/node:14.20.0-browsers
+    
     steps:
       - checkout
       - restore_cache: 
@@ -29,31 +44,18 @@ jobs:
              - ~/.npm
              - ~/.cache
       - run:
-          command: npm run test
-          name: Run tests
-      - run:
-          name: Build app
           command: | 
-            echo "CI Value:" $CI
+            echo $CI
             TMP_CI=$CI
             CI=""
             npm run build
             CI=$TMP_CI
-  imagePush:
-    docker:
-      - image: docker:17.05.0-ce-git
-        auth:
-          username: $DOCKERHUB_USERNAME
-          password: $DOCKER_PASSWORD
-    steps:
-      - checkout
       - setup_remote_docker
       - run: 
           name: Publish Docker Image to Docker Hub
           command: |
            if [[ -z "$CIRCLE_TAG" ]] ;  then exit 1; fi
             TAG=$CIRCLE_TAG
-
-           REPONAME=$DOCKERHUB_USERNAME/$CIRCLE_PROJECT_REPONAME
+           echo $TS_DOCKER_PUB_PASS | docker login -u $TS_DOCKER_PUB_USR --password-stdin
+           REPONAME=$TS_DOCKER_PUB_USR/$CIRCLE_PROJECT_REPONAME
            docker build -t $REPONAME:$TAG . 
-           docker push $REPONAME:$TAG
