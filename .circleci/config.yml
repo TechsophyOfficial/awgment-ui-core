@@ -22,10 +22,9 @@ workflows:
       - releaseUI:
           context: ossContext
           filters:
-            tags:
-              only: /^v.*/
+            #tags:only: /^v.*/
             branches:
-              ignore: cibuild
+              only: cibuild
 jobs:
   releaseUI:
     docker:
