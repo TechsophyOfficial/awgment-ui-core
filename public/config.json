@@ -1,0 +1,12 @@
+{
+    "baseUrl": "https://techsophy-platform.techsophy.com",
+    "apiGatewayUrl": "https://api-gateway.techsophy.com/api",
+    "keyCloakUrl": "https://keycloak-tsplatform.techsophy.com/",
+    "keyCloakRealm": "techsophy-platform",
+    "keyCloakClientId": "tp-ui-core",
+    "publicUrl": "/model",
+    "socketUrl": "https://sxp.channel-adapter.k8s.techsophy.com/",
+    "socketPath": "/socket.io/",
+    "chatFileServerUrl":"https://fileserver.techsophy.com/",
+    "sxpProjectId":"6233029bfd9468494f68af33"
+}

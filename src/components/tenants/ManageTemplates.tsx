@@ -17,6 +17,7 @@ import {
 import { closeSpinner, showFlashMessage, showSpinner } from '../../actions/common';
 import { DeleteConfirmModal } from '../common/DeleteConfimModal';
 import '../../styles.scss';
+import AppConfig from '../../appConfig';
 
 function MyVerticallyCenteredModal(props) {
     const [name, setName] = useState('');
@@ -59,6 +60,9 @@ function MyVerticallyCenteredModal(props) {
 }
 
 const ManageTemplates = () => {
+    const appData: any = React.useContext(AppConfig);
+    const GATEWAY_URL = appData.apiGatewayUrl;
+
     const [templates, setTemplates] = useState<any[]>([]);
     const [fileContent, setFileContent] = useState<string>('');
     const dispatch = useDispatch();
@@ -69,8 +73,8 @@ const ManageTemplates = () => {
     const [deleteModalShow, setDeleteModalShow] = React.useState(false);
 
     useEffect(() => {
-        getAllTemplates();
-    }, []);
+        if (GATEWAY_URL) getAllTemplates(GATEWAY_URL);
+    }, [GATEWAY_URL]);
 
     const onReaderLoad = async (event) => {
         setFileContent(event.currentTarget.result);
@@ -91,7 +95,7 @@ const ManageTemplates = () => {
 
     const downoadFile = async (): Promise<void> => {
         dispatch(showSpinner());
-        const { success, data } = await downloadTemplateApi(activeTemplateId);
+        const { success, data } = await downloadTemplateApi(activeTemplateId, GATEWAY_URL);
         if (success && data) {
             // Create blob link to download
             const url = window.URL.createObjectURL(data.data);
@@ -126,15 +130,15 @@ const ManageTemplates = () => {
     const deleteFile = async (): Promise<void> => {
         setDeleteModalShow(false);
         dispatch(showSpinner());
-        const { success } = await deleteTemplateApi(activeTemplateId);
+        const { success } = await deleteTemplateApi(activeTemplateId, GATEWAY_URL);
         if (success) {
             resetData();
             dispatch(closeSpinner());
-            getAllTemplates();
+            getAllTemplates(GATEWAY_URL);
         } else {
             resetData();
             dispatch(closeSpinner());
-            getAllTemplates();
+            getAllTemplates(GATEWAY_URL);
             dispatch(closeSpinner());
         }
     };
@@ -142,10 +146,10 @@ const ManageTemplates = () => {
     const onUploadTemplate = async (name: string): Promise<void> => {
         setNameModalShow(false);
         dispatch(showSpinner());
-        const { success } = await uploadTemplateApi(name, fileContent);
+        const { success } = await uploadTemplateApi(name, fileContent, GATEWAY_URL);
         if (success) {
             resetData();
-            getAllTemplates();
+            getAllTemplates(GATEWAY_URL);
             dispatch(closeSpinner());
             dispatch(showFlashMessage({ successMessage: 'Template Uploaded Successfully' }));
         } else {
@@ -153,16 +157,16 @@ const ManageTemplates = () => {
         }
     };
 
-    const getAllTemplates = async (): Promise<void> => {
+    const getAllTemplates = async (gatewayUrl: string): Promise<void> => {
         dispatch(showSpinner());
-        const { success, data } = await getAllTemplatesApi();
+        const { success, data } = await getAllTemplatesApi(gatewayUrl);
         if (success && data) {
             dispatch(closeSpinner());
             setTemplates(data);
         } else {
             dispatch(closeSpinner());
         }
-    }
+    };
 
     const setId = (id) => {
         setActiveTemplateId(id);
@@ -176,10 +180,7 @@ const ManageTemplates = () => {
                         {templates?.length > 0 &&
                             templates.map((eachTheme: any, i) => {
                                 return (
-                                    <ListGroupItem
-                                        action
-                                        key={eachTheme.id}
-                                        onClick={() => setId(eachTheme.id)}>
+                                    <ListGroupItem action key={eachTheme.id} onClick={() => setId(eachTheme.id)}>
                                         <div style={{ display: 'flex', flexDirection: 'row' }}>
                                             <div />
                                             {templates[i].name}

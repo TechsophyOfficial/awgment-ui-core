@@ -10,6 +10,7 @@ import { Typography } from '@material-ui/core';
 import fileUploadState from '../../assets/images/states/uploadFile.png';
 import { uploadProfileImage } from 'services/PreferenceService';
 import { ThemeContext } from 'theme/ThemeContext';
+import AppConfig from '../../appConfig';
 
 const UploadProfileImage = (props) => {
     const [bg, setBg] = useState<any>(null);
@@ -17,6 +18,7 @@ const UploadProfileImage = (props) => {
     const bgRef = React.createRef<any>();
     const bgEmptyStateRef = React.createRef<any>();
     const { onChangeProfilePic } = useContext(ThemeContext);
+    const appData: any = React.useContext(AppConfig);
 
     const openBG = (image: File): void => {
         setBg(image);
@@ -32,7 +34,8 @@ const UploadProfileImage = (props) => {
 
     const onUploadBgImage = async (name, file): Promise<void> => {
         dispatch(showSpinner());
-        const { success, message } = await uploadProfileImage(file, name);
+        const gatewayUrl= appData?.apiGatewayUrl;
+        const { success, message } = await uploadProfileImage(file, name, gatewayUrl);
         if (success) {
             const reader = new FileReader();
             reader.readAsDataURL(file);

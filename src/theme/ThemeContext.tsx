@@ -24,7 +24,9 @@ interface State {
 }
 
 export const ThemeContext = React.createContext({} as State);
-export const ThemeContextProvider = ({ children }) => {
+export const ThemeContextProvider = ({ children, config }) => {
+    const GATEWAY_URL = config.apiGatewayUrl;
+
     const [theme, setTheme] = React.useState<unknown>(defaultTheme);
     const [themes, setThemes] = React.useState<ThemeInstance[]>([]);
     const [userInfo, setUserInfo] = React.useState<userPreferences>({} as userPreferences);
@@ -37,7 +39,7 @@ export const ThemeContextProvider = ({ children }) => {
 
     const getDbThemes = async () => {
         //Call theme api (to get all themes)
-        const { success, data } = await getAllThemes({ paginate: false });
+        const { success, data } = await getAllThemes({ paginate: false, gatewayUrl:GATEWAY_URL });
         if (success && data) {
             const allThemes = data;
             setThemes(allThemes);
@@ -46,7 +48,7 @@ export const ThemeContextProvider = ({ children }) => {
     };
 
     const getSelecterUserTheme = async (allThemes): Promise<void> => {
-        const { success, data } = await getUserTheme();
+        const { success, data } = await getUserTheme(GATEWAY_URL);
         if (success && data) {
             let selectedTheme = null;
             allThemes.map((theme) => {

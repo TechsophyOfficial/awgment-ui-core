@@ -46,13 +46,13 @@ import ViewTicketForm from 'components/view-ticket-form';
 import MenuForm from 'components/menuForms';
 import Uploads from 'components/uploads';
 
-const {
+/* const {
     REACT_APP_HOST: commonHost,
     REACT_APP_ACCOUNTS_HOST: accountsHost,
     REACT_APP_CASE_INBOX_HOST: caseInboxHost,
     REACT_APP_FORM_URL: formHost,
     REACT_APP_TEMPLATES_HOST: templatesHost,
-} = process.env;
+} = process.env; */
 
 const PrivateRoute = ({ component: Component, ...restProps }): React.ReactElement => {
     return (
@@ -80,7 +80,13 @@ const ModelerRoute = ({ component: Component, ...restProps }): React.ReactElemen
     );
 };
 
-const Navigator = ({ history }: any): React.ReactElement => {
+const Navigator = ({ history, config }: any): React.ReactElement => {
+    const commonHost = config.baseUrl;
+    const accountsHost = `${config.baseUrl}/accounts`;
+    const caseInboxHost = `${config.baseUrl}/case-inbox`;
+    const formHost = `${config.baseUrl}/model/forms`;
+    const templatesHost = `${config.baseUrl}/model/templates`;
+
     const { keycloak, initialized } = useKeycloak();
     const { appTheme, appThemes, muiTheme } = useContext(ThemeContext);
     const token = sessionStorage.getItem('react-token');
@@ -110,10 +116,11 @@ const Navigator = ({ history }: any): React.ReactElement => {
                                         primaryText="Get started"
                                         secondaryText="Navigate through the side menu"
                                     />
-                                )}></PrivateRoute>
-                            <ModelerRoute exact path={PREFERENCES} component={Preferences}></ModelerRoute>
+                                )}
+                            />
+                            <ModelerRoute exact path={PREFERENCES} component={Preferences} />
 
-                            <ModelerRoute exact path={MANAGE_THEMES} component={ManageThemes}></ModelerRoute>
+                            <ModelerRoute exact path={MANAGE_THEMES} component={ManageThemes} />
 
                             {/* <ModelerRoute exact path={MANAGE_TEMPLATES} component={ManageTemplates}></ModelerRoute> */}
 
@@ -127,14 +134,15 @@ const Navigator = ({ history }: any): React.ReactElement => {
                                         name="TemplatesMFE"
                                         mainhost={commonHost}
                                     />
-                                )}></ModelerRoute>
+                                )}
+                            />
 
                             {/* <ModelerRoute exact path={OPEN_TICKET} component={OpenTicket}></ModelerRoute> */}
 
-                            <ModelerRoute exact path={SAVE_SUBMIT} component={SaveAndSubmitForm}></ModelerRoute>
+                            <ModelerRoute exact path={SAVE_SUBMIT} component={SaveAndSubmitForm} />
 
-                            <ModelerRoute exact path={VIEW_TICKET} component={MenuForm}></ModelerRoute>
-                            <ModelerRoute exact path={UPLOAD_CSV} component={Uploads}></ModelerRoute>
+                            <ModelerRoute exact path={VIEW_TICKET} component={MenuForm} />
+                            <ModelerRoute exact path={UPLOAD_CSV} component={Uploads} />
                             {/* <ModelerRoute
                                 exact
                                 path={DOCTOR_CONSULTATION}

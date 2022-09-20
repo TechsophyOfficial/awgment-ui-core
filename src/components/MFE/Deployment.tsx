@@ -1,9 +1,13 @@
 import React from 'react';
 import MicroFrontend from '../common/MicroFrontEnd';
+import AppConfig from '../../appConfig';
 
-const { REACT_APP_HOST: commonHost, REACT_APP_DEPLOYMENT_HOST: host } = process.env;
+//const { REACT_APP_HOST: commonHost, REACT_APP_DEPLOYMENT_HOST: host } = process.env;
 
 const Deployment = ({ history }) => {
+    const appData: any = React.useContext(AppConfig);
+    const commonHost = appData.baseUrl;
+    const host = `${appData.baseUrl}/deployment`;
     return (
         <div>
             <MicroFrontend history={history} host={host} name="DeploymentMFE" mainhost={commonHost} />

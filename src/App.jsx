@@ -11,12 +11,9 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ThemeContextProvider } from './theme/ThemeContext';
 import Spinner from './components/common/Spinner';
 import LoadSxpChat from 'components/chatWidget';
+import AppConfig from './appConfig';
 
 const queryClient = new QueryClient();
-
-const defaultHistory = createBrowserHistory({
-    basename: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : '/',
-});
 
 // const defaultHistory = createBrowserHistory({ forceRefresh: true });
 
@@ -25,15 +22,23 @@ const urlParams = new URLSearchParams(window.location.search);
 const urlRealm = urlParams.get(REALM);
 const storedRealm = sessionStorage.getItem('realm');
 
-const App = ({ history = defaultHistory }) => {
-    const realm = urlRealm ? urlRealm : storedRealm ? storedRealm : process.env.REACT_APP_KEYCLOAK_REALM;
+const App = (props) => {
+    const config = props.config;
+
+    const defaultHistory = createBrowserHistory({
+        basename: config.publicUrl ? config.publicUrl : '/',
+    });
+
+    const history = props.history ? props.history : defaultHistory;
+
+    const realm = urlRealm ? urlRealm : storedRealm ? storedRealm : config.keyCloakRealm;
     sessionStorage.setItem('theme-loaded', 'false');
     sessionStorage.setItem('realm', realm);
 
     const keycloak = new Keycloak({
         realm: realm,
-        url: `${process.env.REACT_APP_KEYCLOAK_URL}auth/`,
-        clientId: process.env.REACT_APP_KEYCLOAK_CLIENT_ID,
+        url: `${config.keyCloakUrl}auth/`,
+        clientId: config.keyCloakClientId,
     });
 
     const setTokens = () => {
@@ -84,12 +89,14 @@ const App = ({ history = defaultHistory }) => {
             authClient={keycloak}
             onEvent={handleEvent}>
             <QueryClientProvider client={queryClient}>
-                <ThemeContextProvider>
+                <ThemeContextProvider config={config}>
                     <LocaleProvider>
                         <Provider store={store}>
                             <Spinner />
-                            <Navigator history={history} />
-                            <LoadSxpChat />
+                            <AppConfig.Provider value={config}>
+                                <Navigator history={history} config={config} />
+                                {/* <LoadSxpChat /> */}
+                            </AppConfig.Provider>
                         </Provider>
                     </LocaleProvider>
                 </ThemeContextProvider>
