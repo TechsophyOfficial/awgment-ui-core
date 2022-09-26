@@ -84,7 +84,8 @@ const Navigator = ({ history, config }: any): React.ReactElement => {
     const commonHost = config.baseUrl;
     const accountsHost = `${config.baseUrl}/accounts`;
     const caseInboxHost = `${config.baseUrl}/case-inbox`;
-    const formHost = `${config.baseUrl}/model/forms`;
+    // const formHost = `${config.baseUrl}/model/forms`;
+    const formHost = `http://localhost:3001/model/forms`;
     const templatesHost = `${config.baseUrl}/model/templates`;
 
     const { keycloak, initialized } = useKeycloak();
