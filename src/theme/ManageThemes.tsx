@@ -239,7 +239,15 @@ const ManageThemes = () => {
                                 working on the overall product outlook.
                             </p>
                         </ThemeHeading>
-                        <Tabs defaultActiveKey="createTheme" className="core-ui-tabs" style={{ marginTop: '13px' }}>
+                        <Tabs
+                            defaultActiveKey="createTheme"
+                            className="core-ui-tabs"
+                            style={{
+                                marginTop: '13px',
+                                width: '300px',
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                            }}>
                             <Tab eventKey="createTheme" title="Create Theme">
                                 <Title>
                                     <h4>
