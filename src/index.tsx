@@ -5,8 +5,19 @@ import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'formiojs/dist/formio.full.min.css';
 
-fetch('../model/config.json')
-    .then(async (r) => (r.json()))
+// fetch('../model/config.json')
+//     .then(async (r) => r.json())
+//     .then((config) => {
+//         ReactDOM.render(
+//             <React.StrictMode>
+//                 <App config={config} />
+//             </React.StrictMode>,
+//             document.getElementById('root'),
+//         );
+//     });
+
+fetch(`https://demo1691447.mockable.io/api/awgment/v1/tenants${window.location.pathname}`)
+    .then(async (r) => r.json())
     .then((config) => {
         ReactDOM.render(
             <React.StrictMode>
@@ -15,5 +26,3 @@ fetch('../model/config.json')
             document.getElementById('root'),
         );
     });
-
-    

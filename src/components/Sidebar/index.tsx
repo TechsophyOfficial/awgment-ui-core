@@ -142,7 +142,6 @@ const Sidebar = () => {
     const [componentLinks, setComponentLinks] = useState<any>([]);
 
     const appData: any = React.useContext(AppConfig);
-    
 
     useEffect(() => {
         if (edit) {

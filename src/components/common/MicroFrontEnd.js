@@ -4,7 +4,7 @@ import { closeSpinner, showSpinner } from '../../actions/common';
 import { withTheme } from 'styled-components';
 import { FOOTER_HEIGHT, HEADER_HEIGHT } from 'constants/common';
 
-const MicroFrontend = ({ name, host, history, mainhost }) => {
+const MicroFrontend = ({ name, host, history, mainhost, config }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -18,13 +18,13 @@ const MicroFrontend = ({ name, host, history, mainhost }) => {
                 window[`unmount${name}`] && window[`unmount${name}`](`${name}-container`)
             );
         };
-    }, [name, host, history, mainhost]);
+    }, [name, host, history, mainhost, config]);
 
     const loadMFEApp = () => {
         const scriptId = `regulatory-frontend-script-${name}`;
         const renderMicroservice = () => {
             dispatch(closeSpinner());
-            return window[`render${name}`] && window[`render${name}`](`${name}-container`, history);
+            return window[`render${name}`] && window[`render${name}`](`${name}-container`, history, config);
         };
         if (document.getElementById(scriptId)) {
             renderMicroservice();
