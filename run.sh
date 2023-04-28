@@ -2,7 +2,7 @@
 set -xe
 # WEB_ROOT=/usr/share/nginx/html
 
-mkdir $WEB_ROOT/model || true
+mkdir $WEB_ROOT || true
 
 rm -rf nginx.conf || true
 cat >> nginx.conf << EOF
@@ -11,15 +11,15 @@ server {
   root $WEB_ROOT;
   server_name $HOSTNAME;
 
- error_page  404             /model/index.html;
+ error_page  404             /index.html;
 
-  location ~ ^/model/((?!(static|(.*\..*))).)+$ {
-    root $WEB_ROOT/model;
-    try_files /model/index.html =404;
+  location ~ ^/((?!(static|(.*\..*))).)+$ {
+    root $WEB_ROOT;
+    try_files /index.html =404;
   }
 }
 EOF
 
-./env2Json.sh > $WEB_ROOT/model/config.json
+./env2Json.sh > $WEB_ROOT/config.json
 
 nginx -c nginx.conf  -g "daemon off;"
