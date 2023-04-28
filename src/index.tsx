@@ -16,7 +16,7 @@ import 'formiojs/dist/formio.full.min.css';
 //         );
 //     });
 
-fetch(`https://demo1691447.mockable.io/api/awgment/v1/tenants${window.location.pathname}`)
+fetch(`https://demo1691447.mockable.io/api/awgment/v1/tenants${window.location.pathname.slice(0, -1)}`)
     .then(async (r) => r.json())
     .then((config) => {
         ReactDOM.render(
