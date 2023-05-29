@@ -8,8 +8,6 @@ const Workflow = ({ history }) => {
     const appData: any = React.useContext(AppConfig);
     const commonHost = appData.baseUrl;
     const workflowHost = `${appData.baseUrl}/model/process`;
-
-    console.log(appData);
     return (
         <div>
             <MicroFrontend

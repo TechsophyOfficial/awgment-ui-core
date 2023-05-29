@@ -45,7 +45,6 @@ import SaveAndSubmitForm from 'components/save-submit-form';
 import ViewTicketForm from 'components/view-ticket-form';
 import MenuForm from 'components/menuForms';
 import Uploads from 'components/uploads';
-import { useHistory } from 'react-router-dom';
 
 /* const {
     REACT_APP_HOST: commonHost,
@@ -82,7 +81,6 @@ const ModelerRoute = ({ component: Component, ...restProps }): React.ReactElemen
 };
 
 const Navigator = ({ history, config }: any): React.ReactElement => {
-    const appHistory = useHistory();
     const commonHost = config.baseUrl;
     const accountsHost = `${config.baseUrl}/accounts`;
     const caseInboxHost = `${config.baseUrl}/case-inbox`;
@@ -99,6 +97,10 @@ const Navigator = ({ history, config }: any): React.ReactElement => {
         onTokenRecieved(token);
         sessionStorage.setItem('theme-loaded', 'true');
     }
+
+    useEffect(() => {
+        history.push('/');
+    }, [window.location.pathname]);
 
     useEffect(() => {
         setFlag(true);
