@@ -198,6 +198,7 @@ const Navigator = ({ history, config }: any): React.ReactElement => {
                                         host={accountsHost}
                                         name="AccountsMFE"
                                         mainhost={commonHost}
+                                        config={config}
                                     />
                                 )}
                             />
@@ -210,6 +211,7 @@ const Navigator = ({ history, config }: any): React.ReactElement => {
                                         host={accountsHost}
                                         name="AccountsMFE"
                                         mainhost={commonHost}
+                                        config={config}
                                     />
                                 )}
                             />
