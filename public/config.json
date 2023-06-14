@@ -1,0 +1,13 @@
+{
+    "baseUrl": "https://techsophy-platform.techsophy.com",
+    "apiGatewayUrl": "https://api-gateway.techsophy.com/api",
+    "keyCloakUrl": "https://keycloak-tsplatform.techsophy.com/",
+    "keyCloakRealm": "techsophy-platform",
+    "keyCloakClientId": "tp-ui-core",
+    "publicUrl": "/model",
+    "publicWorkflowUrl": "/model/process/",
+    "publicAccountsUrl": "/accounts/",
+    "mfeAccountContainerBaseName": "/model/accounts",
+    "mfeFormContainerBaseName": "/model/form-modeler",
+    "publicFormsUrl": "/model/forms/"
+}
