@@ -10,7 +10,13 @@ const Workflow = ({ history }) => {
     const workflowHost = `${appData.baseUrl}/model/process`;
     return (
         <div>
-            <MicroFrontend history={history} host={workflowHost} name="WorkflowMFE" mainhost={commonHost} />
+            <MicroFrontend
+                history={history}
+                host={workflowHost}
+                name="WorkflowMFE"
+                mainhost={commonHost}
+                config={appData}
+            />
         </div>
     );
 };

@@ -10,7 +10,7 @@ const Form = ({ history }) => {
     const host = `${appData.baseUrl}/model/forms`;
     return (
         <div>
-            <MicroFrontend history={history} host={host} name="FormMFE" mainhost={commonHost} />
+            <MicroFrontend history={history} host={host} name="FormMFE" mainhost={commonHost} config={appData} />
         </div>
     );
 };

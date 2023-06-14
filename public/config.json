@@ -5,8 +5,9 @@
     "keyCloakRealm": "techsophy-platform",
     "keyCloakClientId": "tp-ui-core",
     "publicUrl": "/model",
-    "socketUrl": "https://sxp.channel-adapter.k8s.techsophy.com/",
-    "socketPath": "/socket.io/",
-    "chatFileServerUrl":"https://fileserver.techsophy.com/",
-    "sxpProjectId":"6233029bfd9468494f68af33"
+    "publicWorkflowUrl": "/model/process/",
+    "publicAccountsUrl": "/accounts/",
+    "mfeAccountContainerBaseName": "/model/accounts",
+    "mfeFormContainerBaseName": "/model/form-modeler",
+    "publicFormsUrl": "/model/forms/"
 }

@@ -34,6 +34,7 @@ const App = (props) => {
     const realm = urlRealm ? urlRealm : storedRealm ? storedRealm : config.keyCloakRealm;
     sessionStorage.setItem('theme-loaded', 'false');
     sessionStorage.setItem('realm', realm);
+    sessionStorage.setItem('config', JSON.stringify(config));
 
     const keycloak = new Keycloak({
         realm: realm,
