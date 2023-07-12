@@ -16,7 +16,7 @@ if (sessionStorage.getItem('react-token')) {
         document.getElementById('root'),
     );
 } else {
-    fetch(`${window.location.origin}${window.location.pathname}.json`)
+    fetch(`${window.location.origin}${window.location.pathname.replace('/model', '')}.json`)
         .then(async (r) => r.json())
         .then((config) => {
             ReactDOM.render(
