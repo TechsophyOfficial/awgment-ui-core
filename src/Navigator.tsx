@@ -99,7 +99,7 @@ const Navigator = ({ history, config }: any): React.ReactElement => {
     }
 
     useEffect(() => {
-        history.push('/model');
+        history.push('/');
     }, [window.location.pathname]);
 
     useEffect(() => {
