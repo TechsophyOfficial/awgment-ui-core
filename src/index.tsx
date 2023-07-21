@@ -40,3 +40,14 @@ if (sessionStorage.getItem('react-token')) {
             //     });
         });
 }
+
+// fetch(`${window.location.origin}${window.location.pathname.replace('/model', '')}.json`)
+//     .then(async (r) => r.json())
+//     .then((config) => {
+//         ReactDOM.render(
+//             <React.StrictMode>
+//                 <App config={config} />
+//             </React.StrictMode>,
+//             document.getElementById('root'),
+//         );
+//     });

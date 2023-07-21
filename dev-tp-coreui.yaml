@@ -2,40 +2,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: core-ui
-  namespace: dev
+    name: core-ui
+    namespace: dev
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      name: core-ui
-  template:
-    metadata:
-      labels:
-        name: core-ui
-    spec:
-      containers:
-      - image: tsdevopsteam/platform:core-ui-$BUILD_NUMBER
-        name: core-ui
-        envFrom:
-         - configMapRef:
-             name: coreui-env
-        ports:
-        - containerPort: 80
-      imagePullSecrets:
-      - name: ts-platform
-
-
+    replicas: 1
+    selector:
+        matchLabels:
+            name: core-ui
+    template:
+        metadata:
+            labels:
+                name: core-ui
+        spec:
+            containers:
+                - image: tsdevopsteam/platform:core-ui-$BUILD_NUMBER
+                  name: core-ui
+                  envFrom:
+                      - configMapRef:
+                            name: coreui-env
+                  ports:
+                      - containerPort: 80
+            imagePullSecrets:
+                - name: ts-platform
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: core-ui
-  namespace: dev
-spec:
-  type: ClusterIP
-  ports:
-  - port: 80
-  selector:
     name: core-ui
+    namespace: dev
+spec:
+    type: ClusterIP
+    ports:
+        - port: 80
+    selector:
+        name: core-ui
