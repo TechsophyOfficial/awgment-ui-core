@@ -18,7 +18,7 @@ import { CustomFormattedMessage } from '../common/CustomFormattedMessage';
 import styled from 'styled-components';
 import { withTheme } from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useKeycloak } from '@react-keycloak/web';
+import KeycloakService from 'KeycloakService';
 
 interface Cards {
     imageUrl: string;
@@ -28,8 +28,8 @@ interface Cards {
 }
 
 export const Home = ({ history: any }) => {
-    const { keycloak } = useKeycloak();
-    const { idTokenParsed } = keycloak;
+    const idTokenParsed = KeycloakService.getTokenParsed();
+    const userEmail = KeycloakService.getUserEmail();
 
     const renderCards = ({ imageUrl, cardTitle, cardLink, cardLinkTitle }: Cards) => {
         return (
@@ -55,7 +55,7 @@ export const Home = ({ history: any }) => {
     // FIXME: TEMPORARY USER ROLE INTRODUCED
     return (
         <div>
-            {idTokenParsed && idTokenParsed['email'] === 'wasim.k@techsophy.com' ? (
+            {idTokenParsed && userEmail === 'wasim.k@techsophy.com' ? (
                 <Row style={{ justifyContent: 'space-evenly', margin: '6em' }}>
                     {renderCards({
                         imageUrl: require('../../assets/images/caseInbox.png'),
@@ -64,7 +64,7 @@ export const Home = ({ history: any }) => {
                         cardLinkTitle: 'goToCaseInbox',
                     })}
                 </Row>
-            ) : idTokenParsed && idTokenParsed['email'] === 'venkataramana.g@techsophy.com' ? (
+            ) : idTokenParsed && userEmail === 'venkataramana.g@techsophy.com' ? (
                 <Row style={{ justifyContent: 'space-evenly', margin: '6em' }}>
                     {renderCards({
                         imageUrl: require('../../assets/images/ticket.jpg'),

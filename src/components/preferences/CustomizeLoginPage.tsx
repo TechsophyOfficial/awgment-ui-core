@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { Button } from 'react-bootstrap';
 import PlaneLayout from '../../layout/PlaneLayout';
 import FileUpload from '../common/FileUpload';
-import { useKeycloak } from '@react-keycloak/web';
 import { ADMIN_ROLE, BG_IMAGE_NAME, LOGO_IMAGE_NAME } from '../../constants/common';
 import { uploadKeycloakThemeImageApi } from '../../services/KeycloakTheme';
 import { useDispatch } from 'react-redux';
@@ -12,12 +11,14 @@ import { closeSpinner, showFlashMessage, showSpinner } from '../../actions/commo
 import { Typography } from '@material-ui/core';
 import fileUploadState from '../../assets/images/states/uploadFile.png';
 import AppConfig from '../../appConfig';
+import KeycloakService from 'KeycloakService';
 
 const CustomizeLoginPage = (props) => {
     // const [fileContent, setFileContent] = useState<string>('');
     const [bg, setBg] = useState<any>(null);
     const [logo, setLogo] = useState<any>(null);
-    const { keycloak } = useKeycloak();
+
+    const roles = KeycloakService.getRoles();
     const dispatch = useDispatch();
     const bgRef = React.createRef<any>();
     const logoRef = React.createRef<any>();
@@ -99,7 +100,7 @@ const CustomizeLoginPage = (props) => {
 
     return (
         <PlaneLayout>
-            {hasTenantRole(keycloak.realmAccess?.roles) && (
+            {hasTenantRole(roles) && (
                 <CustomLoginWrapper style={{ display: 'flex' }}>
                     <div style={{ marginRight: '60px' }}>
                         <Typography variant="body1">Choose a Background Image</Typography>
@@ -142,9 +143,7 @@ const CustomizeLoginPage = (props) => {
                 </CustomLoginWrapper>
             )}
 
-            {!hasTenantRole(keycloak.realmAccess?.roles) && (
-                <div>User does not have the permission to Customize login screen </div>
-            )}
+            {!hasTenantRole(roles) && <div>User does not have the permission to Customize login screen </div>}
         </PlaneLayout>
     );
 };

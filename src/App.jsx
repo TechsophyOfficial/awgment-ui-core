@@ -46,9 +46,6 @@ const App = (props) => {
         const { token, refreshToken, idTokenParsed } = keycloak;
         if (token && refreshToken && idTokenParsed) {
             sessionStorage.setItem('react-token', token);
-            localStorage.setItem('token', token);
-            localStorage.setItem('currentUser', idTokenParsed.preferred_username); // For case inbox filter api
-            localStorage.setItem('email', idTokenParsed.email);
         }
     };
 
@@ -81,28 +78,19 @@ const App = (props) => {
     };
 
     return (
-        <ReactKeycloakProvider
-            initOptions={{
-                onLoad: 'login-required',
-                checkLoginIframe: false,
-                // redirectUri: window.location.origin
-            }}
-            authClient={keycloak}
-            onEvent={handleEvent}>
-            <QueryClientProvider client={queryClient}>
-                <ThemeContextProvider config={config}>
-                    <LocaleProvider>
-                        <Provider store={store}>
-                            <Spinner />
-                            <AppConfig.Provider value={config}>
-                                <Navigator history={history} config={config} />
-                                {/* <LoadSxpChat /> */}
-                            </AppConfig.Provider>
-                        </Provider>
-                    </LocaleProvider>
-                </ThemeContextProvider>
-            </QueryClientProvider>
-        </ReactKeycloakProvider>
+        <QueryClientProvider client={queryClient}>
+            <ThemeContextProvider config={config}>
+                <LocaleProvider>
+                    <Provider store={store}>
+                        <Spinner />
+                        <AppConfig.Provider value={config}>
+                            <Navigator history={history} config={config} />
+                            {/* <LoadSxpChat /> */}
+                        </AppConfig.Provider>
+                    </Provider>
+                </LocaleProvider>
+            </ThemeContextProvider>
+        </QueryClientProvider>
     );
 };
 

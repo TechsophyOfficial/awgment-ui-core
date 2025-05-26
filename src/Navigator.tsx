@@ -21,7 +21,6 @@ import {
     UPLOAD_CSV,
 } from './constants/Routes';
 import DashboardLayout from './layout/Layout';
-import { useKeycloak } from '@react-keycloak/web';
 import MicroFrontend from './components/common/MicroFrontEnd';
 import Workflow from './components/MFE/Workflow';
 import Rule from './components/MFE/Rule';
@@ -45,6 +44,7 @@ import SaveAndSubmitForm from 'components/save-submit-form';
 import ViewTicketForm from 'components/view-ticket-form';
 import MenuForm from 'components/menuForms';
 import Uploads from 'components/uploads';
+import KeycloakService from 'KeycloakService';
 
 /* const {
     REACT_APP_HOST: commonHost,
@@ -86,8 +86,10 @@ const Navigator = ({ history, config }: any): React.ReactElement => {
     const caseInboxHost = `${config.baseUrl}/case-inbox`;
     const formHost = `${config.baseUrl}/model/forms`;
     const templatesHost = `${config.baseUrl}/model/templates`;
-
-    const { keycloak, initialized } = useKeycloak();
+    // keycloak state starts
+    const [initialized, setInitialized] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    // keycloak state ends
     const { appTheme, appThemes, muiTheme } = useContext(ThemeContext);
     const token = sessionStorage.getItem('react-token');
     const { onTokenRecieved } = useContext(ThemeContext);
@@ -104,8 +106,12 @@ const Navigator = ({ history, config }: any): React.ReactElement => {
 
     useEffect(() => {
         setFlag(true);
+        if (KeycloakService.isLoggedIn()) {
+            setIsAuthenticated(true);
+            setInitialized(true);
+        }
     }, []);
-    if (initialized && keycloak.authenticated && token && flag) {
+    if (initialized && isAuthenticated && token && flag) {
         return (
             <>
                 <ThemeProvider theme={muiTheme}>

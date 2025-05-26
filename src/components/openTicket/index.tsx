@@ -13,7 +13,6 @@ import {
     FormioTicketFormSubmitionData,
     OpenTicketSubmitionData,
 } from '../../services/TicketService';
-import { useKeycloak } from '@react-keycloak/web';
 
 const OpenTicket = () => {
     const appData: any = React.useContext(AppConfig);
@@ -21,8 +20,6 @@ const OpenTicket = () => {
 
     const dispatch = useDispatch();
     const history = useHistory();
-    const { keycloak } = useKeycloak();
-    const { idTokenParsed } = keycloak;
 
     const [ticketForm, setTicketForm] = useState<any>(null);
     const [formSubmissionData, setFormSubmissionData] = useState<any>(null);

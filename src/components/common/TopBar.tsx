@@ -2,18 +2,18 @@ import React, { useContext, useRef } from 'react';
 import styled from 'styled-components';
 import { Navbar, Image, Dropdown, ButtonGroup } from 'react-bootstrap';
 import './TopBar.scss';
-import { useKeycloak } from '@react-keycloak/web';
-import { KeycloakPromise } from 'keycloak-js';
 import { useHistory } from 'react-router-dom';
 import { PREFERENCES } from '../../constants/Routes';
 import { withTheme } from 'styled-components';
 import { Avatar } from '@material-ui/core';
 import { ADMIN_ROLE, ADMIN, HEADER_HEIGHT } from '../../constants/common';
 import { ThemeContext } from 'theme/ThemeContext';
+import KeycloakService from 'KeycloakService';
 
 const TopBar = () => {
-    const { keycloak } = useKeycloak();
-    const { idTokenParsed } = keycloak;
+    const loggedInUserName = KeycloakService.getFullname();
+    const roles = KeycloakService.getRoles();
+
     const { userInfo } = useContext(ThemeContext);
     const history = useHistory();
     const imgRef: any = useRef();
@@ -57,12 +57,12 @@ const TopBar = () => {
                 <User>
                     <Dropdown alignRight as={ButtonGroup} className="header-dropdown">
                         <Toggle id="dropdown-basic" style={{ border: 'none' }}>
-                            {idTokenParsed && idTokenParsed['name'] && (
+                            {
                                 <div style={{ display: 'flex' }}>
                                     <Username>
-                                        <span>{idTokenParsed['name']}</span>
+                                        <span>{loggedInUserName}</span>
                                         <br />
-                                        <span> {hasTenantRole(keycloak.realmAccess?.roles)}</span>
+                                        <span> {hasTenantRole(roles)}</span>
                                     </Username>
                                     <Avatar>
                                         {userInfo
@@ -72,15 +72,13 @@ const TopBar = () => {
                                                       src={`data:image/jpeg;base64,${userInfo.profilePicture}`}
                                                   />
                                               )
-                                            : getUserName(idTokenParsed['name'])}
+                                            : getUserName(loggedInUserName)}
                                     </Avatar>
                                 </div>
-                            )}
+                            }
                         </Toggle>
                         <Dropdown.Menu>
-                            <Dropdown.Item onClick={(): KeycloakPromise<void, void> => keycloak.logout()}>
-                                Logout
-                            </Dropdown.Item>
+                            <Dropdown.Item onClick={() => KeycloakService.doLogout()}>Logout</Dropdown.Item>
                             <Dropdown.Item onClick={() => history.push(PREFERENCES)}>User Preferences</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>

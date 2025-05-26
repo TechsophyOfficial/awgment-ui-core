@@ -1,9 +1,9 @@
 import { createTheme } from '@material-ui/core';
-import { useKeycloak } from '@react-keycloak/web';
 import { INITIAL_THEME } from 'constants/common';
 import React, { useEffect } from 'react';
 import { getAllThemes, getUserTheme, ThemeInstance } from '../services/ThemeService';
 import defaultTheme from './defaultTheme.json';
+import KeycloakService from 'KeycloakService';
 
 interface userPreferences {
     id: string;
@@ -31,15 +31,17 @@ export const ThemeContextProvider = ({ children, config }) => {
     const [themes, setThemes] = React.useState<ThemeInstance[]>([]);
     const [userInfo, setUserInfo] = React.useState<userPreferences>({} as userPreferences);
     const [muiTheme, setMuiTheme] = React.useState<any>(INITIAL_THEME);
-    const { initialized } = useKeycloak();
+    const [initialized, setInitialized] = React.useState<any>(false);
 
     useEffect(() => {
-        // getDbThemes()
+        if (KeycloakService.isLoggedIn()) {
+            setInitialized(true);
+        }
     }, []);
 
     const getDbThemes = async () => {
         //Call theme api (to get all themes)
-        const { success, data } = await getAllThemes({ paginate: false, gatewayUrl:GATEWAY_URL });
+        const { success, data } = await getAllThemes({ paginate: false, gatewayUrl: GATEWAY_URL });
         if (success && data) {
             const allThemes = data;
             setThemes(allThemes);

@@ -149,7 +149,6 @@ const Sidebar = () => {
                 setEdit(null);
             }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.pathname]);
 
     useEffect(() => {
@@ -162,7 +161,6 @@ const Sidebar = () => {
             setFormLinks(formComponentsData);
         };
         if (appData) getData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [appData]);
 
     const content = (
