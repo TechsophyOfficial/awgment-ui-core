@@ -34,7 +34,7 @@ const UploadProfileImage = (props) => {
 
     const onUploadBgImage = async (name, file): Promise<void> => {
         dispatch(showSpinner());
-        const gatewayUrl= appData?.apiGatewayUrl;
+        const gatewayUrl = appData?.apiGatewayUrl;
         const { success, message } = await uploadProfileImage(file, name, gatewayUrl);
         if (success) {
             const reader = new FileReader();

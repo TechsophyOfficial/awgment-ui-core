@@ -71,7 +71,7 @@ export const ThemeContextProvider = ({ children, config }) => {
 
     const setupMuiTheme = (theme) => {
         let newTheme = INITIAL_THEME;
-        let data = theme['content'];
+        const data = theme['content'];
         if (data) {
             newTheme = createTheme({
                 palette: {

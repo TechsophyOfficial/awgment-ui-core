@@ -59,7 +59,7 @@ export const Uploads = () => {
         console.log('file....', file[0]);
         setFile(file);
         try {
-            let statusFromServer = await uploadCSV(file[0]?.name, file[0], category, GATEWAY_URL);
+            const statusFromServer = await uploadCSV(file[0]?.name, file[0], category, GATEWAY_URL);
             setFileStatus(true);
             console.log('file....', statusFromServer);
             if (statusFromServer.success) {
@@ -94,7 +94,7 @@ export const Uploads = () => {
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             'application/vnd.ms-excel',
         ];
-        let excelCheck = excelExtensions.filter((e) => e === file.target.files[0].type);
+        const excelCheck = excelExtensions.filter((e) => e === file.target.files[0].type);
         if (excelCheck.length > 0) {
             setExcelErrorText(false);
             setFileName(file.target.files[0]?.name);
@@ -119,8 +119,8 @@ export const Uploads = () => {
     const handleReupload = async () => {
         console.log(documentID);
         console.log(type);
-        let token = sessionStorage.getItem('react-token');
-        let userEmail = localStorage.getItem('email');
+        const token = sessionStorage.getItem('react-token');
+        const userEmail = localStorage.getItem('email');
         const data = {
             processDefinitionKey: 'Process_ntost2p',
             businessKey: 'synchronizerutility',
@@ -136,10 +136,10 @@ export const Uploads = () => {
                     Authorization: `Bearer ${token}`,
                 },
             })
-            .then(function (response) {
+            .then((response) => {
                 console.log(response);
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.log(error);
             });
         console.log(response);
@@ -611,12 +611,12 @@ export const Uploads = () => {
                             }}
                             variant="outlined"
                             onClick={async () => {
-                                let data = await downloadCsv(UPLOAD_DOWNLOAD_ID, GATEWAY_URL);
-                                let response = data?.data;
-                                var csv = response;
-                                var downloadLink = document.createElement('a');
-                                var blob = new Blob(['\ufeff', csv]);
-                                var url = URL.createObjectURL(blob);
+                                const data = await downloadCsv(UPLOAD_DOWNLOAD_ID, GATEWAY_URL);
+                                const response = data?.data;
+                                const csv = response;
+                                const downloadLink = document.createElement('a');
+                                const blob = new Blob(['\ufeff', csv]);
+                                const url = URL.createObjectURL(blob);
                                 downloadLink.href = url;
                                 downloadLink.download = 'data.csv';
 
@@ -640,12 +640,12 @@ export const Uploads = () => {
                             }}
                             variant="outlined"
                             onClick={async () => {
-                                let data = await downloadCsv(UPLOAD_DOWNLOAD_ID, GATEWAY_URL);
-                                let response = data?.data;
-                                var csv = response;
-                                var downloadLink = document.createElement('a');
-                                var blob = new Blob(['\ufeff', csv]);
-                                var url = URL.createObjectURL(blob);
+                                const data = await downloadCsv(UPLOAD_DOWNLOAD_ID, GATEWAY_URL);
+                                const response = data?.data;
+                                const csv = response;
+                                const downloadLink = document.createElement('a');
+                                const blob = new Blob(['\ufeff', csv]);
+                                const url = URL.createObjectURL(blob);
                                 downloadLink.href = url;
                                 downloadLink.download = 'data.csv';
 
@@ -667,12 +667,12 @@ export const Uploads = () => {
                             }}
                             variant="outlined"
                             onClick={async () => {
-                                let data = await downloadCsv(UPLOAD_DOWNLOAD_ID, GATEWAY_URL);
-                                let response = data?.data;
-                                var csv = response;
-                                var downloadLink = document.createElement('a');
-                                var blob = new Blob(['\ufeff', csv]);
-                                var url = URL.createObjectURL(blob);
+                                const data = await downloadCsv(UPLOAD_DOWNLOAD_ID, GATEWAY_URL);
+                                const response = data?.data;
+                                const csv = response;
+                                const downloadLink = document.createElement('a');
+                                const blob = new Blob(['\ufeff', csv]);
+                                const url = URL.createObjectURL(blob);
                                 downloadLink.href = url;
                                 downloadLink.download = 'data.csv';
 

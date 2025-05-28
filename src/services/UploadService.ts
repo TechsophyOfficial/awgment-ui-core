@@ -38,7 +38,7 @@ export const uploadCSV = async (
 
 export const downloadCsv = async (id: string, gatewayUrl: string) => {
     const DOWNLOAD_CSV = `${gatewayUrl}${DOWNLOAD_ID}`;
-    let token = sessionStorage.getItem('react-token');
+    const token = sessionStorage.getItem('react-token');
     const response = await axios.get(`${DOWNLOAD_CSV}${id}`, {
         headers: {
             Authorization: `Bearer ${token}`,

@@ -13,7 +13,6 @@ jest.mock('../../request');
 
 const mockedRequest = request as jest.Mocked<typeof request>;
 
-
 const successResponse = (data) => {
     const res: ResponseProps = {
         success: true,
@@ -180,7 +179,7 @@ describe('uploadThemeApi', () => {
 
     test('fetches erroneously data from an API', async () => {
         mockedRequest.postForm.mockResolvedValue(errorResponse());
-        const result = await uploadThemeApi('123', '','');
+        const result = await uploadThemeApi('123', '', '');
         expect(result.success).toEqual(false);
     });
 });

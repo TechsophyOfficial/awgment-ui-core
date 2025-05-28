@@ -7,26 +7,27 @@ import 'formiojs/dist/formio.full.min.css';
 import ErrorPage from 'components/common/ErrorPage';
 import KeycloakService from 'KeycloakService';
 
-function renderAppWithConfig(config: any) {
+const renderAppWithConfig = (config: any) => {
     ReactDOM.render(
         <React.StrictMode>
             <App config={config} />
         </React.StrictMode>,
         document.getElementById('root'),
     );
-}
+};
 
 if (sessionStorage.getItem('react-token')) {
     const envs: any = sessionStorage.getItem('config');
     const config: any = JSON.parse(envs);
-    KeycloakService.initKeycloak(() => renderAppWithConfig(config));
+    KeycloakService.initKeycloak(() => renderAppWithConfig(config), config);
 } else {
     fetch(`${'https://apps-dev.trovity.com'}${window.location.pathname}.json`)
         .then(async (r) => r.json())
         .then((config) => {
-            KeycloakService.initKeycloak(() => renderAppWithConfig(config));
+            sessionStorage.setItem('config', JSON.stringify(config));
+            KeycloakService.initKeycloak(() => renderAppWithConfig(config), config);
         })
-        .catch((error) => {
+        .catch(() => {
             ReactDOM.render(<ErrorPage />, document.getElementById('root'));
         });
 }

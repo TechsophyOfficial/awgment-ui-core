@@ -15,15 +15,18 @@ const SaveAndSubmitForm = () => {
 
     const [saveSubmitForm, setSaveSubmitForm] = useState<any>(null);
 
-    const fetchAddForm = useCallback(async (url: string) => {
-        dispatch(showSpinner());
-        const form = await getSaveSubmitForm(url);
-        setSaveSubmitForm(form);
-        dispatch(closeSpinner());
-    }, [dispatch]);
+    const fetchAddForm = useCallback(
+        async (url: string) => {
+            dispatch(showSpinner());
+            const form = await getSaveSubmitForm(url);
+            setSaveSubmitForm(form);
+            dispatch(closeSpinner());
+        },
+        [dispatch],
+    );
 
     useEffect(() => {
-        if(GATEWAY_URL) fetchAddForm(GATEWAY_URL);
+        if (GATEWAY_URL) fetchAddForm(GATEWAY_URL);
     }, [fetchAddForm, GATEWAY_URL]);
 
     const handleEvent = ({ success, message }) => {

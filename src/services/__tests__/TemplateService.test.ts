@@ -1,10 +1,5 @@
 import { request, ResponseProps } from '../../request';
-import {
-    deleteTemplateApi,
-    downloadTemplateApi,
-    getAllTemplatesApi,
-    uploadTemplateApi,
-} from '../TemplateService';
+import { deleteTemplateApi, downloadTemplateApi, getAllTemplatesApi, uploadTemplateApi } from '../TemplateService';
 import { TEMPLATE_UPLOAD, TEMPLATE_DOWNLOAD, ALL_TEMPLATES, TEMPLATES_DELETE } from '../../constants/endpoints';
 
 jest.mock('../../request');
@@ -29,14 +24,14 @@ const errorResponse = () => {
     };
 };
 
-const GET_ALL_TEMPLATES_ENDPOINT ='',
-TEMPLATE_DELETE_ENDPOINNT='',
-TEMPLATE_DOWNLOAD_ENDPOINNT='',
-TEMPLATE_UPLOAD_ENDPOINT='';
+const GET_ALL_TEMPLATES_ENDPOINT = '',
+    TEMPLATE_DELETE_ENDPOINNT = '',
+    TEMPLATE_DOWNLOAD_ENDPOINNT = '',
+    TEMPLATE_UPLOAD_ENDPOINT = '';
 
 describe('getAllTemplatesApi', () => {
     afterEach(jest.clearAllMocks);
-    const URL= '';
+    const URL = '';
     const data = [];
     test('fetches successfully data from an API', async () => {
         mockedRequest.get.mockResolvedValue(successResponse(data));
@@ -69,7 +64,7 @@ describe('uploadTemplateApi', () => {
     };
     test('fetches successfully data from an API', async () => {
         mockedRequest.postForm.mockResolvedValue(successResponse(data));
-        const result = await uploadTemplateApi('fileName', '',URL);
+        const result = await uploadTemplateApi('fileName', '', URL);
         expect(mockedRequest.postForm).toHaveBeenCalledTimes(1);
         expect(mockedRequest.postForm).toHaveBeenCalledWith(`${TEMPLATE_UPLOAD}`, params);
         expect(result.success).toEqual(true);
@@ -77,7 +72,7 @@ describe('uploadTemplateApi', () => {
 
     test('fetches erroneously data from an API', async () => {
         mockedRequest.postForm.mockResolvedValue(errorResponse());
-        const result = await uploadTemplateApi('123', '',URL);
+        const result = await uploadTemplateApi('123', '', URL);
         expect(result.success).toEqual(false);
     });
 });
@@ -89,7 +84,7 @@ describe('downloadTemplateApi testing', () => {
     const URL = '';
     test('fetches successfully data from an API', async () => {
         mockedRequest.getBlob.mockResolvedValue(successResponse(data));
-        const result = await downloadTemplateApi('123',URL);
+        const result = await downloadTemplateApi('123', URL);
         expect(mockedRequest.getBlob).toHaveBeenCalledTimes(1);
         expect(mockedRequest.getBlob).toHaveBeenCalledWith(TEMPLATE_DOWNLOAD + '/123');
         expect(result.success).toEqual(true);
@@ -97,7 +92,7 @@ describe('downloadTemplateApi testing', () => {
 
     test('fetches erroneously data from an API', async () => {
         mockedRequest.getBlob.mockResolvedValue(errorResponse());
-        const result = await downloadTemplateApi('123',URL);
+        const result = await downloadTemplateApi('123', URL);
         expect(mockedRequest.getBlob).toHaveBeenCalledTimes(1);
         expect(result.success).toEqual(false);
     });
@@ -108,7 +103,7 @@ describe('Delete Template testing', () => {
     const URL = '';
     test('fetches successfully data from an API', async () => {
         mockedRequest.delete.mockResolvedValue(successResponse({}));
-        const result = await deleteTemplateApi('123',URL);
+        const result = await deleteTemplateApi('123', URL);
         expect(mockedRequest.delete).toHaveBeenCalledTimes(1);
         expect(mockedRequest.delete).toHaveBeenCalledWith(TEMPLATES_DELETE + '123');
         expect(result).toEqual(successResponse({}));
@@ -116,7 +111,7 @@ describe('Delete Template testing', () => {
 
     test('fetches erroneously data from an API', async () => {
         mockedRequest.delete.mockResolvedValue(errorResponse());
-        const result = await deleteTemplateApi('123',URL);
+        const result = await deleteTemplateApi('123', URL);
         expect(mockedRequest.delete).toHaveBeenCalledTimes(1);
         expect(result.success).toEqual(false);
     });

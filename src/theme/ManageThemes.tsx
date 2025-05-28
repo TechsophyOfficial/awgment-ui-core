@@ -142,14 +142,14 @@ const ManageThemes = () => {
             const name = data?.name ? data.name : '';
             setName(name);
             if (contents) {
-                Object.keys(contents).map(function (Ckey, index) {
+                Object.keys(contents).map((Ckey, index) => {
                     const headers: Header[] = [];
                     if (Ckey === 'colors') {
                         const header = contents[Ckey];
-                        Object.keys(header).map(function (hkey, index) {
-                            Object.keys(THEMES_KEYS.HEADER).map(function (Tkey, index) {
+                        Object.keys(header).map((hkey, index) => {
+                            Object.keys(THEMES_KEYS.HEADER).map((Tkey, index) => {
                                 if (THEMES_KEYS.HEADER[Tkey] === hkey) {
-                                    let obj: Header = { id: '', title: '', value: '' };
+                                    const obj: Header = { id: '', title: '', value: '' };
                                     obj.id = THEMES_KEYS.HEADER[Tkey];
                                     obj.value = header[hkey];
                                     obj.title = THEME_TITLES[THEMES_KEYS.HEADER[Tkey]];
@@ -162,8 +162,8 @@ const ManageThemes = () => {
                     }
                     if (Ckey === 'fonts') {
                         const fontData = contents[Ckey];
-                        Object.keys(fontData).map(function (hkey, index) {
-                            Object.keys(THEMES_KEYS.FONTS).map(function (Fkey, index) {
+                        Object.keys(fontData).map((hkey, index) => {
+                            Object.keys(THEMES_KEYS.FONTS).map((Fkey, index) => {
                                 if (THEMES_KEYS.FONTS[Fkey] === hkey) {
                                     if (hkey === THEMES_KEYS.FONTS.FONT_SIZE) {
                                         setFontSize(fontData[hkey]);
