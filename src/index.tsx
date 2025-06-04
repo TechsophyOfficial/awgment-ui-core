@@ -21,7 +21,7 @@ if (sessionStorage.getItem('react-token')) {
     const config: any = JSON.parse(envs);
     KeycloakService.initKeycloak(() => renderAppWithConfig(config), config);
 } else {
-    fetch(`${'https://apps-dev.trovity.com'}${window.location.pathname}.json`)
+    fetch(`${window.location.origin}${window.location.pathname}.json`)
         .then(async (r) => r.json())
         .then((config) => {
             sessionStorage.setItem('config', JSON.stringify(config));
